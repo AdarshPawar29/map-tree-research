@@ -1,0 +1,1 @@
+{"version":3,"file":"static/css/main.dfd5f3ca.css","mappings":"AAAA,UACI,YAAa,CACb,4BAEJ","sources":["App.css"],"sourcesContent":[".tree-box{\n    display: flex;\n    justify-content: space-around;\n    /* gap: 10rem; */\n}"],"names":[],"sourceRoot":""}
