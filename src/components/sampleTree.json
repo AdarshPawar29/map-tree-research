@@ -1,0 +1,1146 @@
+{
+    "repo": "sps.qa.featureTest.entityOverride.basicOverrides.documentWrite",
+    "outfile": "documentWrite.xtl",
+    "branch": "master",
+    "output": {
+        "atts": {
+            "date": "11/1/2012",
+            "fileType": "FORM",
+            "name": "SPS Commerce Xtencil",
+            "contents": "NORM"
+        },
+        "name": "SPSFILE",
+        "children": [
+            {
+                "atts": {
+                    "origin": "Mark Dymond",
+                    "fullyQualifiedJavaName": "sps.qa.featureTest.entityOverride.basicOverrides.documentWrite",
+                    "direction": "B",
+                    "lastModifiedBy": "mdymond",
+                    "name": "documentWrite",
+                    "encoding": "UTF-8",
+                    "keys": "documentWrite.header.documentID",
+                    "javaName": "documentWrite",
+                    "javaPackageName": "sps.qa.featureTest.entityOverride.basicOverrides",
+                    "resolverInsert": "Y",
+                    "xtencilType": "XML",
+                    "source": "sps.qa.featureTest.entityOverride.basicOverrides.documentRead",
+                    "sourceTypeDirection": "B",
+                    "designerversion": "2.7.2",
+                    "owner": "Test Company",
+                    "designDate": "11/1/2012",
+                    "sourceFiles": "document.xtl",
+                    "type": "850",
+                    "revision": "1"
+                },
+                "name": "DOCUMENTDEF",
+                "children": [
+                    {
+                        "name": "PREVALIDATION",
+                        "children": [
+                            {
+                                "text": "//begin init\npublic void init() {\n\tsetProperty(\"evisionKey\", \"TESTKEY\");\n}//end-method\n//end init\n",
+                                "name": "java"
+                            }
+                        ]
+                    },
+                    {
+                        "atts": {
+                            "sourceFilter": "No Filter",
+                            "justification": "Left",
+                            "name": "header",
+                            "min": "1",
+                            "javaName": "header",
+                            "isRecord": "N",
+                            "persistent": "Y",
+                            "source": "documentRead.header",
+                            "nextRow": "N",
+                            "enable": "Y",
+                            "max": "1",
+                            "print": "Y",
+                            "exclude": "N",
+                            "display": "Y",
+                            "present": "Y"
+                        },
+                        "name": "GROUPDEF",
+                        "children": [
+                            {
+                                "atts": {
+                                    "enable": "Y",
+                                    "mandatory": "N",
+                                    "name": "documentID",
+                                    "source": "documentRead.header.documentID",
+                                    "dataType": "JString",
+                                    "javaName": "documentID",
+                                    "keyType": "NONE",
+                                    "edi": "Y",
+                                    "editable": "Y",
+                                    "persistent": "Y",
+                                    "rounding": "2",
+                                    "nextRow": "N",
+                                    "present": "Y",
+                                    "templatable": "Y",
+                                    "maxLength": "25",
+                                    "print": "Y",
+                                    "exclude": "N",
+                                    "dtdRequired": "N",
+                                    "display": "Y",
+                                    "minLength": "1",
+                                    "preferences": [
+                                        {
+                                            "path": "documentWrite.header.documentID",
+                                            "property": "source",
+                                            "value": "documentRead.header.documentID2",
+                                            "entity_override_id": 51403
+                                        }
+                                    ]
+                                },
+                                "name": "FIELDDEF"
+                            }
+                        ]
+                    },
+                    {
+                        "atts": {
+                            "sourceFilter": "No Filter",
+                            "enable": "Y",
+                            "name": "test",
+                            "isRecord": "N",
+                            "javaName": "test",
+                            "persistent": "Y",
+                            "source": "documentRead.test",
+                            "nextRow": "N",
+                            "justification": "Left",
+                            "print": "Y",
+                            "exclude": "N",
+                            "display": "Y",
+                            "present": "Y"
+                        },
+                        "name": "GROUPDEF",
+                        "children": [
+                            {
+                                "atts": {
+                                    "enable": "Y",
+                                    "mandatory": "N",
+                                    "name": "testField",
+                                    "source": "documentRead.test.testField",
+                                    "dataType": "JString",
+                                    "javaName": "testField",
+                                    "keyType": "NONE",
+                                    "edi": "Y",
+                                    "editable": "Y",
+                                    "persistent": "Y",
+                                    "rounding": "2",
+                                    "nextRow": "N",
+                                    "templatable": "Y",
+                                    "print": "Y",
+                                    "exclude": "N",
+                                    "dtdRequired": "N",
+                                    "display": "Y",
+                                    "present": "Y"
+                                },
+                                "name": "FIELDDEF"
+                            }
+                        ]
+                    },
+                    {
+                        "atts": {
+                            "sourceFilter": "No Filter",
+                            "enable": "Y",
+                            "name": "sourcingTest",
+                            "isRecord": "N",
+                            "javaName": "sourcingTest",
+                            "persistent": "Y",
+                            "source": "documentRead.sourcingTest",
+                            "nextRow": "N",
+                            "justification": "Left",
+                            "print": "Y",
+                            "exclude": "N",
+                            "display": "Y",
+                            "present": "Y"
+                        },
+                        "name": "GROUPDEF",
+                        "children": [
+                            {
+                                "atts": {
+                                    "enable": "Y",
+                                    "mandatory": "N",
+                                    "name": "sourceOutput",
+                                    "source": "documentRead.sourcingTest.source2",
+                                    "dataType": "JString",
+                                    "javaName": "sourceOutput",
+                                    "keyType": "NONE",
+                                    "edi": "Y",
+                                    "editable": "Y",
+                                    "persistent": "Y",
+                                    "rounding": "2",
+                                    "nextRow": "N",
+                                    "templatable": "Y",
+                                    "print": "Y",
+                                    "exclude": "N",
+                                    "dtdRequired": "N",
+                                    "display": "Y",
+                                    "present": "Y"
+                                },
+                                "name": "FIELDDEF"
+                            },
+                            {
+                                "atts": {
+                                    "enable": "Y",
+                                    "mandatory": "N",
+                                    "name": "nonexistant",
+                                    "dataType": "JString",
+                                    "javaName": "nonexistant",
+                                    "keyType": "NONE",
+                                    "edi": "Y",
+                                    "editable": "Y",
+                                    "persistent": "Y",
+                                    "rounding": "2",
+                                    "nextRow": "N",
+                                    "templatable": "Y",
+                                    "print": "Y",
+                                    "exclude": "N",
+                                    "dtdRequired": "N",
+                                    "display": "Y",
+                                    "present": "Y",
+                                    "preferences": [
+                                        {
+                                            "path": "documentWrite.sourcingTest.nonexistant",
+                                            "property": "source",
+                                            "value": "documentRead.sourcingTest.source1",
+                                            "entity_override_id": 51404
+                                        }
+                                    ]
+                                },
+                                "name": "FIELDDEF"
+                            }
+                        ]
+                    },
+                    {
+                        "atts": {
+                            "sourceFilter": "No Filter",
+                            "enable": "Y",
+                            "name": "badSource",
+                            "isRecord": "N",
+                            "javaName": "badSource",
+                            "persistent": "Y",
+                            "source": "documentRead.badSource",
+                            "nextRow": "N",
+                            "justification": "Left",
+                            "print": "Y",
+                            "exclude": "N",
+                            "display": "Y",
+                            "present": "Y"
+                        },
+                        "name": "GROUPDEF",
+                        "children": [
+                            {
+                                "atts": {
+                                    "enable": "Y",
+                                    "mandatory": "N",
+                                    "name": "badSourceField",
+                                    "dataType": "JString",
+                                    "javaName": "badSourceField",
+                                    "keyType": "NONE",
+                                    "edi": "Y",
+                                    "editable": "Y",
+                                    "persistent": "Y",
+                                    "rounding": "2",
+                                    "nextRow": "N",
+                                    "templatable": "Y",
+                                    "print": "Y",
+                                    "exclude": "N",
+                                    "dtdRequired": "N",
+                                    "display": "Y",
+                                    "present": "Y"
+                                },
+                                "name": "FIELDDEF"
+                            }
+                        ]
+                    },
+                    {
+                        "atts": {
+                            "sourceFilter": "No Filter",
+                            "enable": "Y",
+                            "name": "fieldLength",
+                            "isRecord": "N",
+                            "javaName": "fieldLength",
+                            "persistent": "Y",
+                            "source": "documentRead.fieldLength",
+                            "nextRow": "N",
+                            "justification": "Left",
+                            "print": "Y",
+                            "exclude": "N",
+                            "display": "Y",
+                            "present": "Y"
+                        },
+                        "name": "GROUPDEF",
+                        "children": [
+                            {
+                                "atts": {
+                                    "enable": "Y",
+                                    "mandatory": "N",
+                                    "name": "fieldLengthField",
+                                    "source": "documentRead.fieldLength.fieldLengthField",
+                                    "dataType": "JString",
+                                    "javaName": "fieldLengthField",
+                                    "keyType": "NONE",
+                                    "edi": "Y",
+                                    "editable": "Y",
+                                    "persistent": "Y",
+                                    "rounding": "2",
+                                    "nextRow": "N",
+                                    "templatable": "Y",
+                                    "print": "Y",
+                                    "exclude": "N",
+                                    "dtdRequired": "N",
+                                    "display": "Y",
+                                    "present": "Y"
+                                },
+                                "name": "FIELDDEF"
+                            }
+                        ]
+                    },
+                    {
+                        "atts": {
+                            "sourceFilter": "No Filter",
+                            "enable": "Y",
+                            "name": "constantValue",
+                            "isRecord": "N",
+                            "javaName": "constantValue",
+                            "persistent": "Y",
+                            "source": "documentRead.constantValue",
+                            "nextRow": "N",
+                            "justification": "Left",
+                            "print": "Y",
+                            "exclude": "N",
+                            "display": "Y",
+                            "present": "Y"
+                        },
+                        "name": "GROUPDEF",
+                        "children": [
+                            {
+                                "atts": {
+                                    "enable": "Y",
+                                    "mandatory": "N",
+                                    "name": "defaultVal",
+                                    "dataType": "JString",
+                                    "javaName": "defaultVal",
+                                    "defaultValue": "default data value",
+                                    "edi": "Y",
+                                    "editable": "Y",
+                                    "persistent": "Y",
+                                    "rounding": "2",
+                                    "nextRow": "N",
+                                    "templatable": "Y",
+                                    "print": "Y",
+                                    "exclude": "N",
+                                    "dtdRequired": "N",
+                                    "display": "Y",
+                                    "present": "Y",
+                                    "keyType": "NONE"
+                                },
+                                "name": "FIELDDEF"
+                            },
+                            {
+                                "atts": {
+                                    "enable": "Y",
+                                    "mandatory": "N",
+                                    "name": "setstringearly",
+                                    "dataType": "JString",
+                                    "javaName": "setstringearly",
+                                    "keyType": "NONE",
+                                    "edi": "Y",
+                                    "editable": "Y",
+                                    "persistent": "Y",
+                                    "rounding": "2",
+                                    "nextRow": "N",
+                                    "templatable": "Y",
+                                    "print": "Y",
+                                    "exclude": "N",
+                                    "dtdRequired": "N",
+                                    "display": "Y",
+                                    "present": "Y"
+                                },
+                                "name": "FIELDDEF",
+                                "children": [
+                                    {
+                                        "name": "PREVALIDATION",
+                                        "children": [
+                                            {
+                                                "text": "//begin init\npublic void init() {\n\tme.setString(\"setstring prevalidation init\");\n}//end-method\n//end init\n        ",
+                                                "name": "java"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "atts": {
+                                    "enable": "Y",
+                                    "mandatory": "N",
+                                    "name": "setstringlate",
+                                    "dataType": "JString",
+                                    "javaName": "setstringlate",
+                                    "keyType": "NONE",
+                                    "edi": "Y",
+                                    "editable": "Y",
+                                    "persistent": "Y",
+                                    "rounding": "2",
+                                    "nextRow": "N",
+                                    "templatable": "Y",
+                                    "print": "Y",
+                                    "exclude": "N",
+                                    "dtdRequired": "N",
+                                    "display": "Y",
+                                    "present": "Y"
+                                },
+                                "name": "FIELDDEF",
+                                "children": [
+                                    {
+                                        "name": "VALIDATION",
+                                        "children": [
+                                            {
+                                                "text": "//begin documentFinalize\npublic void documentFinalize(ValidationEvent e) {\n\tme.setString(\"setstring prevalidation init\");\n}//end-method\n//end documentFinalize\n        ",
+                                                "name": "java"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "atts": {
+                                    "enable": "Y",
+                                    "mandatory": "N",
+                                    "name": "source",
+                                    "source": "documentRead.constantValue.source",
+                                    "dataType": "JString",
+                                    "javaName": "source",
+                                    "keyType": "NONE",
+                                    "edi": "Y",
+                                    "editable": "Y",
+                                    "persistent": "Y",
+                                    "rounding": "2",
+                                    "nextRow": "N",
+                                    "templatable": "Y",
+                                    "print": "Y",
+                                    "exclude": "N",
+                                    "dtdRequired": "N",
+                                    "display": "Y",
+                                    "present": "Y"
+                                },
+                                "name": "FIELDDEF"
+                            },
+                            {
+                                "atts": {
+                                    "dataLookup": "Y",
+                                    "enable": "Y",
+                                    "mandatory": "N",
+                                    "name": "lookup",
+                                    "source": "documentRead.constantValue.lookup",
+                                    "dataType": "JString",
+                                    "javaName": "lookup",
+                                    "keyType": "NONE",
+                                    "edi": "Y",
+                                    "editable": "Y",
+                                    "persistent": "Y",
+                                    "rounding": "2",
+                                    "nextRow": "N",
+                                    "lookupBySender": "Y",
+                                    "templatable": "Y",
+                                    "print": "Y",
+                                    "exclude": "N",
+                                    "dtdRequired": "N",
+                                    "display": "Y",
+                                    "present": "Y"
+                                },
+                                "name": "FIELDDEF"
+                            }
+                        ]
+                    },
+                    {
+                        "atts": {
+                            "sourceFilter": "No Filter",
+                            "justification": "Left",
+                            "name": "repeating",
+                            "min": "1",
+                            "javaName": "repeating",
+                            "isRecord": "N",
+                            "persistent": "Y",
+                            "source": "documentRead.repeating",
+                            "nextRow": "N",
+                            "enable": "Y",
+                            "max": "3",
+                            "print": "Y",
+                            "exclude": "N",
+                            "display": "Y",
+                            "present": "Y"
+                        },
+                        "name": "GROUPDEF",
+                        "children": [
+                            {
+                                "atts": {
+                                    "sourceFilter": "No Filter",
+                                    "justification": "Left",
+                                    "name": "repeatingRep",
+                                    "min": "1",
+                                    "javaName": "repeatingRep",
+                                    "isRecord": "N",
+                                    "persistent": "Y",
+                                    "source": "documentRead.repeating.repeatingRep",
+                                    "nextRow": "N",
+                                    "enable": "Y",
+                                    "max": "1",
+                                    "print": "Y",
+                                    "exclude": "N",
+                                    "display": "Y",
+                                    "present": "Y"
+                                },
+                                "name": "GROUPDEF",
+                                "children": [
+                                    {
+                                        "atts": {
+                                            "sourceFilter": "No Filter",
+                                            "justification": "Left",
+                                            "name": "item",
+                                            "min": "1",
+                                            "javaName": "item",
+                                            "isRecord": "N",
+                                            "persistent": "Y",
+                                            "source": "documentRead.repeating.repeatingRep.item",
+                                            "nextRow": "N",
+                                            "enable": "Y",
+                                            "max": "1",
+                                            "print": "Y",
+                                            "exclude": "N",
+                                            "display": "Y",
+                                            "present": "Y"
+                                        },
+                                        "name": "GROUPDEF",
+                                        "children": [
+                                            {
+                                                "atts": {
+                                                    "enable": "Y",
+                                                    "mandatory": "N",
+                                                    "name": "qual",
+                                                    "source": "documentRead.repeating.repeatingRep.item.qual",
+                                                    "dataType": "JString",
+                                                    "javaName": "qual",
+                                                    "keyType": "NONE",
+                                                    "edi": "Y",
+                                                    "editable": "Y",
+                                                    "persistent": "Y",
+                                                    "rounding": "2",
+                                                    "nextRow": "N",
+                                                    "templatable": "Y",
+                                                    "print": "Y",
+                                                    "exclude": "N",
+                                                    "dtdRequired": "N",
+                                                    "display": "Y",
+                                                    "present": "Y"
+                                                },
+                                                "name": "FIELDDEF"
+                                            },
+                                            {
+                                                "atts": {
+                                                    "enable": "Y",
+                                                    "mandatory": "N",
+                                                    "name": "defaultValue",
+                                                    "source": "documentRead.repeating.repeatingRep.item.defaultValue",
+                                                    "dataType": "JString",
+                                                    "javaName": "defaultValue",
+                                                    "defaultValue": "repeating default",
+                                                    "edi": "Y",
+                                                    "editable": "Y",
+                                                    "persistent": "Y",
+                                                    "rounding": "2",
+                                                    "nextRow": "N",
+                                                    "templatable": "Y",
+                                                    "print": "Y",
+                                                    "exclude": "N",
+                                                    "dtdRequired": "N",
+                                                    "display": "Y",
+                                                    "present": "Y",
+                                                    "keyType": "NONE"
+                                                },
+                                                "name": "FIELDDEF"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    "input": {
+        "atts": {
+            "date": "11/1/2012",
+            "fileType": "FORM",
+            "name": "SPS Commerce Xtencil",
+            "contents": "NORM"
+        },
+        "name": "SPSFILE",
+        "children": [
+            {
+                "atts": {
+                    "origin": "Mark Dymond",
+                    "fullyQualifiedJavaName": "sps.qa.featureTest.entityOverride.basicOverrides.documentRead",
+                    "encoding": "UTF-8",
+                    "sourceTypeDirection": "B",
+                    "owner": "Test Company",
+                    "quoteWrap": "Y",
+                    "designDate": "11/1/2012",
+                    "resolverFetch": "Y",
+                    "javaName": "documentRead",
+                    "javaPackageName": "sps.qa.featureTest.entityOverride.basicOverrides",
+                    "lastModifiedBy": "mdymond",
+                    "designerversion": "2.7.2",
+                    "movableColumns": "Y",
+                    "freeFormable": "N",
+                    "duplicatesAllowed": "N",
+                    "direction": "O",
+                    "keys": "documentRead.header.documentID",
+                    "ignoreFirstLine": "Y",
+                    "sendLink": "N",
+                    "name": "document",
+                    "type": "850",
+                    "xtencilType": "XML",
+                    "revision": "1"
+                },
+                "name": "DOCUMENTDEF",
+                "children": [
+                    {
+                        "name": "FORMAT",
+                        "children": [
+                            {
+                                "text": ",",
+                                "atts": {
+                                    "position": "DEFAULT",
+                                    "appliesTo": "FIELD",
+                                    "type": "CHAR",
+                                    "tagContent": "NAME",
+                                    "tagType": "NORMAL"
+                                },
+                                "name": "DELIMITER"
+                            }
+                        ]
+                    },
+                    {
+                        "atts": {
+                            "sourceFilter": "No Filter",
+                            "justification": "Left",
+                            "name": "header",
+                            "lookupByReceiver": "Y",
+                            "min": "1",
+                            "lookupBySender": "Y",
+                            "javaName": "header",
+                            "isRecord": "N",
+                            "persistent": "N",
+                            "nextRow": "N",
+                            "enable": "Y",
+                            "max": "1",
+                            "print": "Y",
+                            "exclude": "N",
+                            "freeFormable": "N",
+                            "display": "Y",
+                            "present": "Y"
+                        },
+                        "name": "GROUPDEF",
+                        "children": [
+                            {
+                                "atts": {
+                                    "enable": "Y",
+                                    "mandatory": "N",
+                                    "name": "documentID",
+                                    "dataType": "JString",
+                                    "javaName": "documentID",
+                                    "keyType": "NONE",
+                                    "edi": "Y",
+                                    "editable": "Y",
+                                    "persistent": "Y",
+                                    "rounding": "2",
+                                    "nextRow": "N",
+                                    "templatable": "Y",
+                                    "print": "Y",
+                                    "exclude": "N",
+                                    "dtdRequired": "N",
+                                    "display": "Y",
+                                    "present": "Y"
+                                },
+                                "name": "FIELDDEF"
+                            },
+                            {
+                                "atts": {
+                                    "enable": "Y",
+                                    "mandatory": "Y",
+                                    "name": "documentID2",
+                                    "dataType": "JString",
+                                    "javaName": "documentID2",
+                                    "defaultValue": "2",
+                                    "edi": "Y",
+                                    "editable": "Y",
+                                    "persistent": "Y",
+                                    "rounding": "2",
+                                    "nextRow": "N",
+                                    "templatable": "Y",
+                                    "print": "Y",
+                                    "exclude": "N",
+                                    "dtdRequired": "N",
+                                    "display": "Y",
+                                    "present": "Y",
+                                    "keyType": "NONE"
+                                },
+                                "name": "FIELDDEF"
+                            }
+                        ]
+                    },
+                    {
+                        "atts": {
+                            "sourceFilter": "No Filter",
+                            "enable": "Y",
+                            "name": "test",
+                            "isRecord": "N",
+                            "javaName": "test",
+                            "persistent": "Y",
+                            "nextRow": "N",
+                            "justification": "Left",
+                            "print": "Y",
+                            "exclude": "N",
+                            "display": "Y",
+                            "present": "Y"
+                        },
+                        "name": "GROUPDEF",
+                        "children": [
+                            {
+                                "atts": {
+                                    "enable": "Y",
+                                    "mandatory": "N",
+                                    "name": "testField",
+                                    "dataType": "JString",
+                                    "javaName": "testField",
+                                    "keyType": "NONE",
+                                    "edi": "Y",
+                                    "editable": "Y",
+                                    "persistent": "Y",
+                                    "rounding": "2",
+                                    "nextRow": "N",
+                                    "templatable": "Y",
+                                    "print": "Y",
+                                    "exclude": "N",
+                                    "dtdRequired": "N",
+                                    "display": "Y",
+                                    "present": "Y"
+                                },
+                                "name": "FIELDDEF"
+                            }
+                        ]
+                    },
+                    {
+                        "atts": {
+                            "sourceFilter": "No Filter",
+                            "enable": "Y",
+                            "name": "sourcingTest",
+                            "isRecord": "N",
+                            "javaName": "sourcingTest",
+                            "persistent": "Y",
+                            "nextRow": "N",
+                            "justification": "Left",
+                            "print": "Y",
+                            "exclude": "N",
+                            "display": "Y",
+                            "present": "Y"
+                        },
+                        "name": "GROUPDEF",
+                        "children": [
+                            {
+                                "atts": {
+                                    "enable": "Y",
+                                    "mandatory": "N",
+                                    "name": "source1",
+                                    "dataType": "JString",
+                                    "javaName": "source1",
+                                    "defaultValue": "source1",
+                                    "edi": "Y",
+                                    "editable": "Y",
+                                    "persistent": "Y",
+                                    "rounding": "2",
+                                    "nextRow": "N",
+                                    "templatable": "Y",
+                                    "print": "Y",
+                                    "exclude": "N",
+                                    "dtdRequired": "N",
+                                    "display": "Y",
+                                    "present": "Y",
+                                    "keyType": "NONE"
+                                },
+                                "name": "FIELDDEF"
+                            },
+                            {
+                                "atts": {
+                                    "enable": "Y",
+                                    "mandatory": "N",
+                                    "name": "source2",
+                                    "dataType": "JString",
+                                    "javaName": "source2",
+                                    "keyType": "NONE",
+                                    "edi": "Y",
+                                    "editable": "Y",
+                                    "persistent": "Y",
+                                    "rounding": "2",
+                                    "nextRow": "N",
+                                    "templatable": "Y",
+                                    "print": "Y",
+                                    "exclude": "N",
+                                    "dtdRequired": "N",
+                                    "display": "Y",
+                                    "present": "Y"
+                                },
+                                "name": "FIELDDEF"
+                            }
+                        ]
+                    },
+                    {
+                        "atts": {
+                            "sourceFilter": "No Filter",
+                            "enable": "Y",
+                            "name": "badSource",
+                            "isRecord": "N",
+                            "javaName": "badSource",
+                            "persistent": "Y",
+                            "nextRow": "N",
+                            "justification": "Left",
+                            "print": "Y",
+                            "exclude": "N",
+                            "display": "Y",
+                            "present": "Y"
+                        },
+                        "name": "GROUPDEF",
+                        "children": [
+                            {
+                                "atts": {
+                                    "enable": "Y",
+                                    "mandatory": "N",
+                                    "name": "badSourceField",
+                                    "dataType": "JString",
+                                    "javaName": "badSourceField",
+                                    "keyType": "NONE",
+                                    "edi": "Y",
+                                    "editable": "Y",
+                                    "persistent": "Y",
+                                    "rounding": "2",
+                                    "nextRow": "N",
+                                    "templatable": "Y",
+                                    "print": "Y",
+                                    "exclude": "N",
+                                    "dtdRequired": "N",
+                                    "display": "Y",
+                                    "present": "Y"
+                                },
+                                "name": "FIELDDEF"
+                            }
+                        ]
+                    },
+                    {
+                        "atts": {
+                            "sourceFilter": "No Filter",
+                            "enable": "Y",
+                            "name": "fieldLength",
+                            "isRecord": "N",
+                            "javaName": "fieldLength",
+                            "persistent": "Y",
+                            "nextRow": "N",
+                            "justification": "Left",
+                            "print": "Y",
+                            "exclude": "N",
+                            "display": "Y",
+                            "present": "Y"
+                        },
+                        "name": "GROUPDEF",
+                        "children": [
+                            {
+                                "atts": {
+                                    "enable": "Y",
+                                    "mandatory": "N",
+                                    "name": "fieldLengthField",
+                                    "dataType": "JString",
+                                    "javaName": "fieldLengthField",
+                                    "keyType": "NONE",
+                                    "edi": "Y",
+                                    "editable": "Y",
+                                    "persistent": "Y",
+                                    "rounding": "2",
+                                    "nextRow": "N",
+                                    "present": "Y",
+                                    "templatable": "Y",
+                                    "maxLength": "2",
+                                    "print": "Y",
+                                    "exclude": "N",
+                                    "dtdRequired": "N",
+                                    "display": "Y",
+                                    "minLength": "1",
+                                    "preferences": [
+                                        {
+                                            "path": "documentRead.fieldLength.fieldLengthField",
+                                            "property": "maxLength",
+                                            "value": "3",
+                                            "entity_override_id": 8
+                                        }
+                                    ]
+                                },
+                                "name": "FIELDDEF"
+                            }
+                        ]
+                    },
+                    {
+                        "atts": {
+                            "sourceFilter": "No Filter",
+                            "enable": "Y",
+                            "name": "constantValue",
+                            "isRecord": "N",
+                            "javaName": "constantValue",
+                            "persistent": "Y",
+                            "nextRow": "N",
+                            "justification": "Left",
+                            "print": "Y",
+                            "exclude": "N",
+                            "display": "Y",
+                            "present": "Y"
+                        },
+                        "name": "GROUPDEF",
+                        "children": [
+                            {
+                                "atts": {
+                                    "enable": "Y",
+                                    "mandatory": "N",
+                                    "name": "defaultVal",
+                                    "dataType": "JString",
+                                    "javaName": "defaultVal",
+                                    "keyType": "NONE",
+                                    "edi": "Y",
+                                    "editable": "Y",
+                                    "persistent": "Y",
+                                    "rounding": "2",
+                                    "nextRow": "N",
+                                    "templatable": "Y",
+                                    "print": "Y",
+                                    "exclude": "N",
+                                    "dtdRequired": "N",
+                                    "display": "Y",
+                                    "present": "Y"
+                                },
+                                "name": "FIELDDEF"
+                            },
+                            {
+                                "atts": {
+                                    "enable": "Y",
+                                    "mandatory": "N",
+                                    "name": "setstringearly",
+                                    "dataType": "JString",
+                                    "javaName": "setstringearly",
+                                    "keyType": "NONE",
+                                    "edi": "Y",
+                                    "editable": "Y",
+                                    "persistent": "Y",
+                                    "rounding": "2",
+                                    "nextRow": "N",
+                                    "templatable": "Y",
+                                    "print": "Y",
+                                    "exclude": "N",
+                                    "dtdRequired": "N",
+                                    "display": "Y",
+                                    "present": "Y"
+                                },
+                                "name": "FIELDDEF"
+                            },
+                            {
+                                "atts": {
+                                    "enable": "Y",
+                                    "mandatory": "N",
+                                    "name": "setstringlate",
+                                    "dataType": "JString",
+                                    "javaName": "setstringlate",
+                                    "keyType": "NONE",
+                                    "edi": "Y",
+                                    "editable": "Y",
+                                    "persistent": "Y",
+                                    "rounding": "2",
+                                    "nextRow": "N",
+                                    "templatable": "Y",
+                                    "print": "Y",
+                                    "exclude": "N",
+                                    "dtdRequired": "N",
+                                    "display": "Y",
+                                    "present": "Y"
+                                },
+                                "name": "FIELDDEF"
+                            },
+                            {
+                                "atts": {
+                                    "enable": "Y",
+                                    "mandatory": "N",
+                                    "name": "source",
+                                    "dataType": "JString",
+                                    "javaName": "source",
+                                    "keyType": "NONE",
+                                    "edi": "Y",
+                                    "editable": "Y",
+                                    "persistent": "Y",
+                                    "rounding": "2",
+                                    "nextRow": "N",
+                                    "templatable": "Y",
+                                    "print": "Y",
+                                    "exclude": "N",
+                                    "dtdRequired": "N",
+                                    "display": "Y",
+                                    "present": "Y"
+                                },
+                                "name": "FIELDDEF"
+                            },
+                            {
+                                "atts": {
+                                    "enable": "Y",
+                                    "mandatory": "N",
+                                    "name": "lookup",
+                                    "dataType": "JString",
+                                    "javaName": "lookup",
+                                    "keyType": "NONE",
+                                    "edi": "Y",
+                                    "editable": "Y",
+                                    "persistent": "Y",
+                                    "rounding": "2",
+                                    "nextRow": "N",
+                                    "templatable": "Y",
+                                    "print": "Y",
+                                    "exclude": "N",
+                                    "dtdRequired": "N",
+                                    "display": "Y",
+                                    "present": "Y"
+                                },
+                                "name": "FIELDDEF"
+                            }
+                        ]
+                    },
+                    {
+                        "atts": {
+                            "sourceFilter": "No Filter",
+                            "justification": "Left",
+                            "name": "repeating",
+                            "min": "1",
+                            "javaName": "repeating",
+                            "isRecord": "N",
+                            "persistent": "Y",
+                            "nextRow": "N",
+                            "enable": "Y",
+                            "max": "3",
+                            "print": "Y",
+                            "exclude": "N",
+                            "display": "Y",
+                            "present": "Y"
+                        },
+                        "name": "GROUPDEF",
+                        "children": [
+                            {
+                                "atts": {
+                                    "sourceFilter": "No Filter",
+                                    "justification": "Left",
+                                    "name": "repeatingRep",
+                                    "min": "1",
+                                    "javaName": "repeatingRep",
+                                    "isRecord": "N",
+                                    "persistent": "Y",
+                                    "nextRow": "N",
+                                    "enable": "Y",
+                                    "max": "1",
+                                    "print": "Y",
+                                    "exclude": "N",
+                                    "display": "Y",
+                                    "present": "Y"
+                                },
+                                "name": "GROUPDEF",
+                                "children": [
+                                    {
+                                        "atts": {
+                                            "sourceFilter": "No Filter",
+                                            "justification": "Left",
+                                            "name": "item",
+                                            "min": "1",
+                                            "javaName": "item",
+                                            "isRecord": "N",
+                                            "persistent": "Y",
+                                            "nextRow": "N",
+                                            "enable": "Y",
+                                            "max": "1",
+                                            "print": "Y",
+                                            "exclude": "N",
+                                            "display": "Y",
+                                            "present": "Y"
+                                        },
+                                        "name": "GROUPDEF",
+                                        "children": [
+                                            {
+                                                "atts": {
+                                                    "enable": "Y",
+                                                    "mandatory": "N",
+                                                    "name": "qual",
+                                                    "dataType": "JString",
+                                                    "javaName": "qual",
+                                                    "keyType": "NONE",
+                                                    "edi": "Y",
+                                                    "editable": "Y",
+                                                    "persistent": "Y",
+                                                    "rounding": "2",
+                                                    "nextRow": "N",
+                                                    "templatable": "Y",
+                                                    "print": "Y",
+                                                    "exclude": "N",
+                                                    "dtdRequired": "N",
+                                                    "display": "Y",
+                                                    "present": "Y"
+                                                },
+                                                "name": "FIELDDEF"
+                                            },
+                                            {
+                                                "atts": {
+                                                    "preferences": [
+                                                        {
+                                                            "path": "documentRead.repeating.repeatingRep.item.defaultValue",
+                                                            "property": "defaultValue",
+                                                            "value": "overridden!",
+                                                            "entity_override_id": 51314
+                                                        }
+                                                    ],
+                                                    "enable": "Y",
+                                                    "mandatory": "N",
+                                                    "name": "defaultValue",
+                                                    "dataType": "JString",
+                                                    "javaName": "defaultValue",
+                                                    "defaultValue": "repeating default",
+                                                    "edi": "Y",
+                                                    "editable": "Y",
+                                                    "persistent": "Y",
+                                                    "rounding": "2",
+                                                    "nextRow": "N",
+                                                    "templatable": "Y",
+                                                    "print": "Y",
+                                                    "exclude": "N",
+                                                    "dtdRequired": "N",
+                                                    "display": "Y",
+                                                    "present": "Y",
+                                                    "keyType": "NONE"
+                                                },
+                                                "name": "FIELDDEF"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    "infile": "document.xtl"
+}

@@ -3061,7 +3061,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/prop-types@npm:*, @types/prop-types@npm:^15.7.4":
+"@types/prop-types@npm:*, @types/prop-types@npm:^15.7.3, @types/prop-types@npm:^15.7.4":
   version: 15.7.5
   resolution: "@types/prop-types@npm:15.7.5"
   checksum: 5b43b8b15415e1f298243165f1d44390403bb2bd42e662bca3b5b5633fdd39c938e91b7fce3a9483699db0f7a715d08cef220c121f723a634972fdf596aec980
@@ -8960,13 +8960,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"leader-line-new@npm:^1.1.9":
-  version: 1.1.9
-  resolution: "leader-line-new@npm:1.1.9"
-  checksum: 6912ad9fd22f15855a248bfb9524974e1f411fd05dba8c3346990439df2f5ba15a99db4d7b273b9a1cc8c795651497e9e9cf5a6c603d6df8c9a4bb880537f1c8
-  languageName: node
-  linkType: hard
-
 "leven@npm:^3.1.0":
   version: 3.1.0
   resolution: "leven@npm:3.1.0"
@@ -9284,7 +9277,6 @@ __metadata:
     "@types/react-router-dom": ^5.3.2
     "@vitejs/plugin-react": ^1.0.9
     jest: ^27.3.1
-    leader-line-new: ^1.1.9
     mui: ^0.0.1
     node-sass: ^7.0.1
     node-sass-tilde-importer: ^1.0.2
@@ -9294,6 +9286,7 @@ __metadata:
     react: ^18.0.0
     react-dom: ^18.0.0
     react-scripts: 5.0.0
+    react-xarrows: ^2.0.2
     sass: ^1.43.4
     ts-jest: ^27.0.7
     typescript: ^4.5.2
@@ -11600,6 +11593,19 @@ __metadata:
     react: ">=16.6.0"
     react-dom: ">=16.6.0"
   checksum: b67bf5b3e86dbab72d658b9a52a3589e5960583ab28c7c66272427d8fe30d4c7de422d5046ae96bd2683cdf80cc3264b2516f5ce80cae1dbe6cf3ca6dda392c5
+  languageName: node
+  linkType: hard
+
+"react-xarrows@npm:^2.0.2":
+  version: 2.0.2
+  resolution: "react-xarrows@npm:2.0.2"
+  dependencies:
+    "@types/prop-types": ^15.7.3
+    lodash: ^4.17.21
+    prop-types: ^15.7.2
+  peerDependencies:
+    react: ">=16.8.0"
+  checksum: e74a53405811f5031d9e31ed6d78f6b712e0c357dbd762abfa68b3ebf0c1311ca9a1396bece012881af54bc84f7ec09e191c0285db6763ce73dbd4cc7fdeffed
   languageName: node
   linkType: hard
 
