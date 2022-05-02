@@ -181,7 +181,15 @@ export default function ObjectTreeView() {
             </TreeView>
           </div>
           {lines.map((line, i) => (
-            <Xarrow key={i} start={line.from} end={line.to} zIndex={1} />
+            <Xarrow
+              key={i}
+              start={line.from}
+              end={line.to}
+              zIndex={1}
+              strokeWidth={2}
+              color={"DimGray"}
+              headSize={0}
+            />
           ))}
         </Xwrapper>
       </div>
