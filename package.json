@@ -2,6 +2,7 @@
   "name": "map-tree-research",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://AdarshPawar29.github.io",
   "dependencies": {
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
@@ -12,6 +13,7 @@
     "@testing-library/react": "^12.0.0",
     "@testing-library/user-event": "^13.2.1",
     "@types/jest": "^27.0.1",
+    "gh-pages": "^3.2.3",
     "mui": "^0.0.1",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
@@ -21,6 +23,8 @@
     "web-vitals": "^2.1.0"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
