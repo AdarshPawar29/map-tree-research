@@ -6,7 +6,7 @@ import InsertDriveFileOutlinedIcon from "@mui/icons-material/InsertDriveFileOutl
 import Xarrow, { useXarrow, Xwrapper } from "react-xarrows";
 
 import TreeItem from "@mui/lab/TreeItem";
-import { LinkService } from "../utils";
+import { updateNodes } from "../utilsf";
 import result from "./sampleTree.json";
 
 interface RenderTree {
@@ -128,33 +128,31 @@ const dataRight: RenderTree = {
   ],
 };
 
-const lines = [
-  { from: "documentRead.header", to: "documentWrite.header" },
-  { from: "3", to: "60" },
-];
+// const lines = [
+//   { from: "documentRead.header", to: "documentWrite.header" },
+//   { from: "3", to: "60" },
+// ];
 
 export default function ObjectTreeView() {
 
   const [input, setInput] = useState([]);
   const [output, setOutput] = useState([]);
-  // const [lines, setLines] = useState<any[]>([])
+  const [lines, setLines] = useState<any[]>([])
 
   useEffect(() => {
-    const data = new LinkService();
-    const filtered = data.updateConnections(result);
-    console.log(filtered);
+    const filtered = updateNodes(result);
     setInput(filtered.input[0]);
     setOutput(filtered.output[0]);
-    // setLines(filtered.edges)
-    // console.log(result)
+    setLines(filtered.edges)
+    console.log(filtered)
   }, []);
   const updateXarrow = useXarrow();
 
   const renderTree = (nodes: any) => (
     <>
       <TreeItem
-        id={nodes.javaName}
-        key={nodes.entity_path}
+        id={nodes.source ? nodes.source: nodes.target}
+        key={nodes.javaName}
         nodeId={nodes.javaName}
         label={nodes.javaName}
         // onClick={() => updateXarrow}
@@ -199,8 +197,8 @@ export default function ObjectTreeView() {
           {lines.map((line, i) => (
             <Xarrow
               key={i}
-              start={line.from}
-              end={line.to}
+              start={line.source}
+              end={line.target}
               zIndex={1}
               strokeWidth={2}
               color={"DimGray"}
