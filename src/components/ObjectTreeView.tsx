@@ -1,4 +1,4 @@
-import React, { Children, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import TreeView from "@mui/lab/TreeView";
 import CreateNewFolderIcon from "@mui/icons-material/CreateNewFolder";
 import FolderOpenIcon from "@mui/icons-material/FolderOpen";
@@ -6,6 +6,8 @@ import InsertDriveFileOutlinedIcon from "@mui/icons-material/InsertDriveFileOutl
 import Xarrow, { useXarrow, Xwrapper } from "react-xarrows";
 
 import TreeItem from "@mui/lab/TreeItem";
+import { updateNodes } from "../utilsf";
+import result from "./sampleTree.json";
 
 interface RenderTree {
   id: string;
@@ -126,25 +128,37 @@ const dataRight: RenderTree = {
   ],
 };
 
-const lines = [
-  { from: "1", to: "30" },
-  { from: "3", to: "60" },
-];
+// const lines = [
+//   { from: "documentRead.header", to: "documentWrite.header" },
+//   { from: "3", to: "60" },
+// ];
 
 export default function ObjectTreeView() {
+
+  const [input, setInput] = useState([]);
+  const [output, setOutput] = useState([]);
+  const [lines, setLines] = useState<any[]>([])
+
+  useEffect(() => {
+    const filtered = updateNodes(result);
+    setInput(filtered.input[0]);
+    setOutput(filtered.output[0]);
+    setLines(filtered.edges)
+    console.log(filtered)
+  }, []);
   const updateXarrow = useXarrow();
 
-  const renderTree = (nodes: RenderTree) => (
+  const renderTree = (nodes: any) => (
     <>
       <TreeItem
-        id={nodes.id}
-        key={nodes.id}
-        nodeId={nodes.id}
-        label={nodes.name}
+        id={nodes.source ? nodes.source: nodes.target}
+        key={nodes.javaName}
+        nodeId={nodes.javaName}
+        label={nodes.javaName}
         // onClick={() => updateXarrow}
       >
         {Array.isArray(nodes.children)
-          ? nodes.children.map((node) => renderTree(node))
+          ? nodes.children.map((node: any) => renderTree(node))
           : null}
       </TreeItem>
     </>
@@ -164,7 +178,7 @@ export default function ObjectTreeView() {
               // sx={{ height: "100%", flexGrow: 1 }}
               onClick={updateXarrow}
             >
-              {renderTree(dataLeft)}
+              {renderTree(input)}
             </TreeView>
           </div>
           <div className="output">
@@ -177,14 +191,14 @@ export default function ObjectTreeView() {
               // sx={{ height: "100%", flexGrow: 1 }}
               onClick={updateXarrow}
             >
-              {renderTree(dataRight)}
+              {renderTree(output)}
             </TreeView>
           </div>
           {lines.map((line, i) => (
             <Xarrow
               key={i}
-              start={line.from}
-              end={line.to}
+              start={line.source}
+              end={line.target}
               zIndex={1}
               strokeWidth={2}
               color={"DimGray"}
