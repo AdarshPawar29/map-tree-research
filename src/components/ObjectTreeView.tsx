@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import TreeView from "@mui/lab/TreeView";
 import CreateNewFolderIcon from "@mui/icons-material/CreateNewFolder";
 import FolderOpenIcon from "@mui/icons-material/FolderOpen";
@@ -9,10 +9,110 @@ import TreeItem from "@mui/lab/TreeItem";
 import { updateNodes } from "../utilsf";
 import result from "./sampleTree.json";
 
-// const lines = [
-//   { from: "documentRead.header", to: "documentWrite.header" },
-//   { from: "3", to: "60" },
-// ];
+// interface RenderTree {
+//   id: string;
+//   name: string;
+//   start?: string;
+//   isExpanded?: boolean;
+//   children?: readonly RenderTree[];
+// }
+
+// const dataLeft: RenderTree = {
+//   id: "root",
+//   name: "Left Tree",
+//   isExpanded: true,
+//   children: [
+//     {
+//       id: "1",
+//       name: "Child - 1",
+//       isExpanded: true,
+//       children: [
+//         {
+//           id: "5",
+//           name: "Child - 5",
+//         },
+//       ],
+//     },
+//     {
+//       id: "3",
+//       name: "Child - 3",
+//       isExpanded: true,
+
+//       children: [
+//         {
+//           id: "4",
+//           name: "Child - 4",
+//           isExpanded: true,
+//           children: [
+//             {
+//               id: "8",
+//               name: "Child - 8",
+//             },
+//           ],
+//         },
+//       ],
+//     },
+//     {
+//       id: "6",
+//       name: "Child - 6",
+//       isExpanded: true,
+//       children: [
+//         {
+//           id: "7",
+//           name: "Child - 7",
+//         },
+//       ],
+//     },
+//   ],
+// };
+
+// const dataRight: RenderTree = {
+//   id: "root",
+//   name: "Left Tree",
+//   isExpanded: true,
+//   children: [
+//     {
+//       id: "10",
+//       name: "Child - 10",
+//     },
+//     {
+//       id: "30",
+//       name: "Child - 30",
+//       isExpanded: true,
+//       children: [
+//         {
+//           id: "40",
+//           name: "Child - 40",
+//           isExpanded: true,
+//           children: [
+//             {
+//               id: "80",
+//               name: "Child - 80",
+//             },
+//           ],
+//         },
+//       ],
+//     },
+//     {
+//       id: "60",
+//       name: "Child - 60",
+//       isExpanded: true,
+//       children: [
+//         {
+//           id: "70",
+//           name: "Child - 70",
+//         },
+//       ],
+//     },
+//   ],
+// };
+// const [lines, setLines] = useState([
+//   { from: "5", to: "80" },
+//   { from: "8", to: "70" },
+//   { from: "7", to: "10" },
+//   { from: "1", to: "30" },
+//   { from: "4", to: "30" },
+// ]);
 
 export default function ObjectTreeView() {
   const [input, setInput] = useState([]);
@@ -26,8 +126,7 @@ export default function ObjectTreeView() {
     setLines(filtered.edges);
     console.log(filtered);
   }, []);
-  const updateXarrow = useXarrow();
-
+  const updateXarrow = setTimeout(useXarrow(), 1000);
   const renderDocumentReadTree = (nodes: any) => (
     <>
       <TreeItem
@@ -71,7 +170,7 @@ export default function ObjectTreeView() {
               defaultExpandIcon={<CreateNewFolderIcon />}
               defaultEndIcon={<InsertDriveFileOutlinedIcon />}
               // sx={{ height: "100%", flexGrow: 1 }}
-              onClick={updateXarrow}
+              onClick={() => updateXarrow}
             >
               {renderDocumentReadTree(input)}
             </TreeView>
@@ -84,7 +183,7 @@ export default function ObjectTreeView() {
               defaultExpandIcon={<CreateNewFolderIcon />}
               defaultEndIcon={<InsertDriveFileOutlinedIcon />}
               // sx={{ height: "100%", flexGrow: 1 }}
-              onClick={updateXarrow}
+              onClick={() => updateXarrow}
             >
               {renderDocumentWriteTree(output)}
             </TreeView>
@@ -92,7 +191,7 @@ export default function ObjectTreeView() {
           {lines.map((line, i) => (
             <Xarrow
               key={i}
-              start={`documentRead.${line.source}`}
+              start={`${line.source}`}
               end={line.target}
               zIndex={1}
               strokeWidth={2}
