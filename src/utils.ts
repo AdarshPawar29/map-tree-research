@@ -63,7 +63,7 @@ export class LinkService {
         ) {
           child.entity_path = pathRoot + "." + child.atts.javaName;
 
-          child.javaName = child.atts.bjavaName;
+          child.javaName = child.atts.javaName;
           this.addPath(pathRoot, child);
           // FIELDDEF that is a direct child of root should be its own "proxy"
           if (child.name === "FIELDDEF" && child.root === parentPath) {
@@ -79,12 +79,12 @@ export class LinkService {
             child.title = "(" + child.atts.javaName + ")";
           }
           if (child.atts.source) {
-            let src = child.atts.source.split('.');
-            src.shift();
-            let source = src.join('.')
+            // let src = child.atts.source.split(".");
+            // src.shift();
+            // let source = src.join(".");
             this.edges.push({
               target: child.entity_path,
-              source: source + "." + "input",
+              source: child.atts.source + "." + "input",
             });
             child.target = child.entity_path;
           } else if (child.atts.target) {
@@ -92,10 +92,8 @@ export class LinkService {
               source: child.entity_path,
               target: child.atts.target,
             });
-          } else if (io === "input") {
-            child.source = child.entity_path + "." + "input";
           }
-
+          this.getPrefEdge(child);
           this.filterMapData(child, io, pathRoot, parentEntity, docDef);
         }
         this.addNode(child, io);
