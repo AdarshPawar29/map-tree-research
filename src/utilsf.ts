@@ -4,27 +4,19 @@ const edges: any[] = [];
 const preferencesEdges: any[] = [];
 const proxyMap: any[] = [];
 const node: any[] = [];
+const defaultExpandedInput: string[] = ["documentRead"];
+const defaultExpandedOutput: string[] = ["documentWrite"];
 
 export const updateNodes = (map: any) => {
   map = {
-    output: [
-      filterData(
-        map.output.children[0],
-        "output",
-        map.output.children[0].atts.javaName
-      ),
-    ],
-    input: [
-      filterData(
-        map.input.children[0],
-        "input",
-        map.input.children[0].atts.javaName
-      ),
-    ],
+    output: [filterData(map.output.children[0], "output")],
+    input: [filterData(map.input.children[0], "input")],
     edges: edges,
     preferencesEdges: preferencesEdges,
     mapName: map.repo,
     proxyMap: proxyMap,
+    defaultExpandedInput: defaultExpandedInput,
+    defaultExpandedOutput: defaultExpandedOutput,
   };
   return map;
 };
@@ -32,13 +24,15 @@ export const updateNodes = (map: any) => {
 export const filterData = (
   data: any,
   io: string,
-  head: string,
   path?: string,
   root?: string,
   doc?: string
 ) => {
-  const parentPath = data.atts.javaName;
-  const pathRoot = data.atts.javaName;
+  const parentPath = path ? path : data.atts.javaName;
+  const pathRoot = path
+    ? parentPath + "." + data.atts.javaName
+    : data.atts.javaName;
+
   let docDef: any = null;
   let parentEntity: any = null;
 
@@ -49,6 +43,15 @@ export const filterData = (
     docDef = data.atts.javaName;
     parentEntity = data.atts.javaName;
     addNode(data, io, node);
+  } else if (path && root && doc && root === path) {
+    parentEntity = pathRoot;
+  } else {
+    addPath(parentPath, data);
+    parentEntity = root;
+  }
+
+  if (root) {
+    data.root = root;
   }
 
   if (data.atts.name && data.atts.name.length > 0) {
@@ -56,6 +59,8 @@ export const filterData = (
   } else {
     data.title = "(" + data.atts.javaName + ")";
   }
+
+  // We need to promote javaName to the top level to provide a consistent interface for consumers
   data.javaName = data.atts.javaName;
   proxyMap[pathRoot] = parentEntity ? parentEntity : root;
   if (data.children) {
@@ -87,26 +92,28 @@ export const filterData = (
         } else {
           child.title = "(" + child.atts.javaName + ")";
         }
-        if (child.atts.source) {
-          edges.push({
-            target: child.entity_path,
-            source: child.atts.source,
-          });
-          child.target = child.entity_path;
-        } else if (child.atts.target) {
-          edges.push({
-            source: child.entity_path,
-            target: child.atts.target,
-          });
-        } else if (io === "input") {
-          if (!child.entity_path.match(head)) {
-            child.source = head + "." + child.entity_path;
-          } else {
-            child.source = child.entity_path;
+        if (child.name === "FIELDDEF") {
+          if (child.atts.source) {
+            edges.push({
+              target: child.entity_path,
+              source: child.atts.source,
+            });
+          } else if (child.atts.target) {
+            edges.push({
+              source: child.entity_path,
+              target: child.atts.target,
+            });
+          }
+        } else {
+          if (io === "input") {
+            defaultExpandedInput.push(child.atts.name);
+          }
+          if (io === "output") {
+            defaultExpandedOutput.push(child.atts.name);
           }
         }
         getPrefEdge(child, node, preferencesEdges);
-        filterData(child, io, head, pathRoot, parentEntity, docDef);
+        filterData(child, io, pathRoot, parentEntity, docDef);
       }
       addNode(child, io, node);
     });
