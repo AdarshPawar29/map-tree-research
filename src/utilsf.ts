@@ -90,7 +90,7 @@ export const filterData = (
         if (child.atts.source) {
           edges.push({
             target: child.entity_path,
-            source: child.atts.source + "." + "input",
+            source: child.atts.source,
           });
           child.target = child.entity_path;
         } else if (child.atts.target) {
@@ -100,9 +100,9 @@ export const filterData = (
           });
         } else if (io === "input") {
           if (!child.entity_path.match(head)) {
-            child.source = head + "." + child.entity_path + "." + "input";
+            child.source = head + "." + child.entity_path;
           } else {
-            child.source = child.entity_path + "." + "input";
+            child.source = child.entity_path;
           }
         }
         getPrefEdge(child, node, preferencesEdges);
