@@ -98,11 +98,11 @@ export default function ObjectTreeView() {
             {lines.map((line, i) => (
               <Xarrow
                 key={i}
-                start={`${line.source}`}
+                start={line.source}
                 end={line.target}
                 zIndex={1}
                 strokeWidth={2}
-                color={"DimGray"}
+                color={line.type === "prefEdge" ? "orange" : "DimGray"}
                 headSize={0}
                 startAnchor="right"
                 endAnchor={"left"}

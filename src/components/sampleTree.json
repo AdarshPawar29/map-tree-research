@@ -85,15 +85,7 @@
                                     "exclude": "N",
                                     "dtdRequired": "N",
                                     "display": "Y",
-                                    "minLength": "1",
-                                    "preferences": [
-                                        {
-                                            "path": "documentWrite.header.documentID",
-                                            "property": "source",
-                                            "value": "documentRead.header.documentID2",
-                                            "entity_override_id": 51403
-                                        }
-                                    ]
+                                    "minLength": "1"
                                 },
                                 "name": "FIELDDEF"
                             }
@@ -136,7 +128,15 @@
                                     "exclude": "N",
                                     "dtdRequired": "N",
                                     "display": "Y",
-                                    "present": "Y"
+                                    "present": "Y",
+                                    "preferences": [
+                                        {
+                                            "path": "documentWrite.test.testField",
+                                            "property": "constantValue",
+                                            "value": "test",
+                                            "entity_override_id": 50612
+                                        }
+                                    ]
                                 },
                                 "name": "FIELDDEF"
                             }
@@ -179,7 +179,15 @@
                                     "exclude": "N",
                                     "dtdRequired": "N",
                                     "display": "Y",
-                                    "present": "Y"
+                                    "present": "Y",
+                                    "preferences": [
+                                        {
+                                            "path": "documentWrite.sourcingTest.sourceOutput",
+                                            "property": "source",
+                                            "value": "documentRead.test.testField",
+                                            "entity_override_id": 50610
+                                        }
+                                    ]
                                 },
                                 "name": "FIELDDEF"
                             },
@@ -205,9 +213,9 @@
                                     "preferences": [
                                         {
                                             "path": "documentWrite.sourcingTest.nonexistant",
-                                            "property": "source",
-                                            "value": "documentRead.sourcingTest.source1",
-                                            "entity_override_id": 51404
+                                            "property": "constantValue",
+                                            "value": "0",
+                                            "entity_override_id": 50822
                                         }
                                     ]
                                 },
@@ -251,7 +259,15 @@
                                     "exclude": "N",
                                     "dtdRequired": "N",
                                     "display": "Y",
-                                    "present": "Y"
+                                    "present": "Y",
+                                    "preferences": [
+                                        {
+                                            "path": "documentWrite.badSource.badSourceField",
+                                            "property": "source",
+                                            "value": "documentRead.badSource.badSourceField",
+                                            "entity_override_id": 50606
+                                        }
+                                    ]
                                 },
                                 "name": "FIELDDEF"
                             }
@@ -294,7 +310,15 @@
                                     "exclude": "N",
                                     "dtdRequired": "N",
                                     "display": "Y",
-                                    "present": "Y"
+                                    "present": "Y",
+                                    "preferences": [
+                                        {
+                                            "path": "documentWrite.fieldLength.fieldLengthField",
+                                            "property": "constantValue",
+                                            "value": "3000",
+                                            "entity_override_id": 50611
+                                        }
+                                    ]
                                 },
                                 "name": "FIELDDEF"
                             }
@@ -320,6 +344,14 @@
                         "children": [
                             {
                                 "atts": {
+                                    "preferences": [
+                                        {
+                                            "path": "documentWrite.constantValue.defaultVal",
+                                            "property": "constantValue",
+                                            "value": "919191",
+                                            "entity_override_id": 50783
+                                        }
+                                    ],
                                     "enable": "Y",
                                     "mandatory": "N",
                                     "name": "defaultVal",
@@ -359,7 +391,15 @@
                                     "exclude": "N",
                                     "dtdRequired": "N",
                                     "display": "Y",
-                                    "present": "Y"
+                                    "present": "Y",
+                                    "preferences": [
+                                        {
+                                            "path": "documentWrite.constantValue.setstringearly",
+                                            "property": "constantValue",
+                                            "value": "8",
+                                            "entity_override_id": 51016
+                                        }
+                                    ]
                                 },
                                 "name": "FIELDDEF",
                                 "children": [
@@ -392,7 +432,15 @@
                                     "exclude": "N",
                                     "dtdRequired": "N",
                                     "display": "Y",
-                                    "present": "Y"
+                                    "present": "Y",
+                                    "preferences": [
+                                        {
+                                            "path": "documentWrite.constantValue.setstringlate",
+                                            "property": "constantValue",
+                                            "value": "ooo88",
+                                            "entity_override_id": 51017
+                                        }
+                                    ]
                                 },
                                 "name": "FIELDDEF",
                                 "children": [
@@ -426,7 +474,21 @@
                                     "exclude": "N",
                                     "dtdRequired": "N",
                                     "display": "Y",
-                                    "present": "Y"
+                                    "present": "Y",
+                                    "preferences": [
+                                        {
+                                            "path": "documentWrite.constantValue.source",
+                                            "property": "defaultValue",
+                                            "value": "q",
+                                            "entity_override_id": 51018
+                                        },
+                                        {
+                                            "path": "documentWrite.constantValue.source",
+                                            "property": "source",
+                                            "value": "documentRead.badSource",
+                                            "entity_override_id": 50887
+                                        }
+                                    ]
                                 },
                                 "name": "FIELDDEF"
                             },
@@ -536,12 +598,28 @@
                                                     "exclude": "N",
                                                     "dtdRequired": "N",
                                                     "display": "Y",
-                                                    "present": "Y"
+                                                    "present": "Y",
+                                                    "preferences": [
+                                                        {
+                                                            "path": "documentWrite.repeating.repeatingRep.item.qual",
+                                                            "property": "source",
+                                                            "value": "documentRead.constantValue.lookup",
+                                                            "entity_override_id": 50615
+                                                        }
+                                                    ]
                                                 },
                                                 "name": "FIELDDEF"
                                             },
                                             {
                                                 "atts": {
+                                                    "preferences": [
+                                                        {
+                                                            "path": "documentWrite.repeating.repeatingRep.item.defaultValue",
+                                                            "property": "constantValue",
+                                                            "value": "test",
+                                                            "entity_override_id": 50609
+                                                        }
+                                                    ],
                                                     "enable": "Y",
                                                     "mandatory": "N",
                                                     "name": "defaultValue",
@@ -795,7 +873,15 @@
                                     "exclude": "N",
                                     "dtdRequired": "N",
                                     "display": "Y",
-                                    "present": "Y"
+                                    "present": "Y",
+                                    "preferences": [
+                                        {
+                                            "path": "documentRead.sourcingTest.source2",
+                                            "property": "target",
+                                            "value": "documentWrite.badSource",
+                                            "entity_override_id": 50605
+                                        }
+                                    ]
                                 },
                                 "name": "FIELDDEF"
                             }
@@ -879,15 +965,7 @@
                                     "exclude": "N",
                                     "dtdRequired": "N",
                                     "display": "Y",
-                                    "minLength": "1",
-                                    "preferences": [
-                                        {
-                                            "path": "documentRead.fieldLength.fieldLengthField",
-                                            "property": "maxLength",
-                                            "value": "3",
-                                            "entity_override_id": 8
-                                        }
-                                    ]
+                                    "minLength": "1"
                                 },
                                 "name": "FIELDDEF"
                             }
@@ -972,7 +1050,15 @@
                                     "exclude": "N",
                                     "dtdRequired": "N",
                                     "display": "Y",
-                                    "present": "Y"
+                                    "present": "Y",
+                                    "preferences": [
+                                        {
+                                            "path": "documentRead.constantValue.setstringlate",
+                                            "property": "target",
+                                            "value": "documentWrite.header.documentID",
+                                            "entity_override_id": 50607
+                                        }
+                                    ]
                                 },
                                 "name": "FIELDDEF"
                             },
@@ -1103,14 +1189,6 @@
                                             },
                                             {
                                                 "atts": {
-                                                    "preferences": [
-                                                        {
-                                                            "path": "documentRead.repeating.repeatingRep.item.defaultValue",
-                                                            "property": "defaultValue",
-                                                            "value": "overridden!",
-                                                            "entity_override_id": 51314
-                                                        }
-                                                    ],
                                                     "enable": "Y",
                                                     "mandatory": "N",
                                                     "name": "defaultValue",

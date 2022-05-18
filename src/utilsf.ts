@@ -11,7 +11,7 @@ export const updateNodes = (map: any) => {
   map = {
     output: [filterData(map.output.children[0], "output")],
     input: [filterData(map.input.children[0], "input")],
-    edges: edges,
+    edges: [...edges, ...preferencesEdges],
     preferencesEdges: preferencesEdges,
     mapName: map.repo,
     proxyMap: proxyMap,
@@ -67,7 +67,7 @@ export const filterData = (
     if (data.name === "DOCUMENTDEF") {
       data.expanded = true;
     }
-    getPrefEdge(data, node, preferencesEdges);
+    getPrefEdge(data, preferencesEdges);
     data.children.forEach((child: any) => {
       if (parentEntity) {
         child.root = parentEntity;
@@ -112,7 +112,7 @@ export const filterData = (
             defaultExpandedOutput.push(child.atts.name);
           }
         }
-        getPrefEdge(child, node, preferencesEdges);
+        getPrefEdge(child, preferencesEdges);
         filterData(child, io, pathRoot, parentEntity, docDef);
       }
       addNode(child, io, node);

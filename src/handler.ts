@@ -7,7 +7,7 @@ export const splitValue = (sourcing: string) => {
   }
 };
 
-export const getPrefEdge = (data: any, node: any, preferencesEdges: any) => {
+export const getPrefEdge = (data: any, preferencesEdges: any) => {
   if (data.atts.preferences) {
     data.atts.preferences.forEach((pref: any) => {
       if (pref.property === "source") {
@@ -15,13 +15,15 @@ export const getPrefEdge = (data: any, node: any, preferencesEdges: any) => {
           preferencesEdges.push({
             target: data.entity_path,
             source: removeQualifiers(sourcing),
+            type: "prefEdge",
           });
         });
       } else if (pref.property === "target") {
         splitValue(pref.value).forEach((sourcing) => {
           preferencesEdges.push({
             target: removeQualifiers(sourcing),
-            source: node,
+            source: data.entity_path,
+            type: "prefEdge",
           });
         });
       }
