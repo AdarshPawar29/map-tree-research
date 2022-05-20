@@ -135,7 +135,13 @@ export default function ObjectTreeView() {
                 end={line.expandedR ? line.expandedR : line.target}
                 zIndex={1}
                 strokeWidth={2}
-                color={line.type === "prefEdge" ? "orange" : "DimGray"}
+                color={
+                  line.type === "prefEdge"
+                    ? "orange"
+                    : line.type === "group"
+                    ? "blue"
+                    : "DimGray"
+                }
                 headSize={0}
                 startAnchor={line.expandedL ? line.expandedL : line.source}
                 endAnchor={line.expandedR ? line.expandedR : line.target}
