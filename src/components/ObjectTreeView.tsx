@@ -102,7 +102,13 @@ export default function ObjectTreeView() {
                 end={line.target}
                 zIndex={1}
                 strokeWidth={2}
-                color={line.type === "prefEdge" ? "orange" : "DimGray"}
+                color={
+                  line.type === "prefEdge"
+                    ? "orange"
+                    : line.type === "group"
+                    ? "blue"
+                    : "DimGray"
+                }
                 headSize={0}
                 startAnchor="right"
                 endAnchor={"left"}

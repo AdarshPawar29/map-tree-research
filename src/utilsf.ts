@@ -1,24 +1,32 @@
 import { addNode, getPrefEdge, addPath, removeExtraNode } from "./handler";
-
-const edges: any[] = [];
-const preferencesEdges: any[] = [];
-const proxyMap: any[] = [];
-const node: any[] = [];
-const defaultExpandedInput: string[] = [];
-const defaultExpandedOutput: string[] = [];
+let edges: any[] = [];
+let allEdges: any[] = [];
+let preferencesEdges: any[] = [];
+let proxyMap: any[] = [];
+let node: any[] = [];
+let defaultExpandedInput: string = "";
+let defaultExpandedOutput: string = "";
 
 export const updateNodes = (map: any) => {
+  edges = [];
+  preferencesEdges = [];
+  proxyMap = [];
+  node = [];
+  allEdges = [];
+  defaultExpandedInput = "";
+  defaultExpandedOutput = "";
   const treeViewOutput = removeExtraNode(map.output.children[0]);
   const treeViewInput = removeExtraNode(map.input.children[0]);
   map = {
     output: [filterData(treeViewOutput, "output")],
     input: [filterData(treeViewInput, "input")],
-    edges: [...edges, ...preferencesEdges],
+    edges: [...edges, ...preferencesEdges, ...allEdges],
+    allEdges: allEdges,
     preferencesEdges: preferencesEdges,
     mapName: map.repo,
     proxyMap: proxyMap,
-    defaultExpandedInput: defaultExpandedInput,
-    defaultExpandedOutput: defaultExpandedOutput,
+    defaultExpandedRead: defaultExpandedInput,
+    defaultExpandedWrite: defaultExpandedOutput,
   };
   return map;
 };
@@ -51,11 +59,9 @@ export const filterData = (
     addPath(parentPath, data);
     parentEntity = root;
   }
-
   if (root) {
     data.root = root;
   }
-
   if (data.atts.name && data.atts.name.length > 0) {
     data.title = data.atts.javaName;
   } else {
@@ -69,10 +75,10 @@ export const filterData = (
     if (data.name === "DOCUMENTDEF") {
       data.expanded = true;
       if (io === "input") {
-        defaultExpandedInput.push(data.entity_path);
+        defaultExpandedInput = data.entity_path;
       }
       if (io === "output") {
-        defaultExpandedOutput.push(data.entity_path);
+        defaultExpandedOutput = data.entity_path;
       }
     }
     getPrefEdge(data, preferencesEdges);
@@ -110,6 +116,20 @@ export const filterData = (
             edges.push({
               source: child.entity_path,
               target: child.atts.target,
+            });
+          }
+        } else {
+          if (child.atts.source) {
+            allEdges.push({
+              target: child.entity_path,
+              source: child.atts.source,
+              type: "group",
+            });
+          } else if (child.atts.target) {
+            allEdges.push({
+              source: child.entity_path,
+              target: child.atts.target,
+              type: "group",
             });
           }
         }
