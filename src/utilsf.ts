@@ -1,16 +1,18 @@
-import { addNode, getPrefEdge, addPath } from "./handler";
+import { addNode, getPrefEdge, addPath, removeExtraNode } from "./handler";
 
 const edges: any[] = [];
 const preferencesEdges: any[] = [];
 const proxyMap: any[] = [];
 const node: any[] = [];
-const defaultExpandedInput: string[] = ["documentRead"];
-const defaultExpandedOutput: string[] = ["documentWrite"];
+const defaultExpandedInput: string[] = [];
+const defaultExpandedOutput: string[] = [];
 
 export const updateNodes = (map: any) => {
+  const treeViewOutput = removeExtraNode(map.output.children[0]);
+  const treeViewInput = removeExtraNode(map.input.children[0]);
   map = {
-    output: [filterData(map.output.children[0], "output")],
-    input: [filterData(map.input.children[0], "input")],
+    output: [filterData(treeViewOutput, "output")],
+    input: [filterData(treeViewInput, "input")],
     edges: [...edges, ...preferencesEdges],
     preferencesEdges: preferencesEdges,
     mapName: map.repo,
@@ -66,6 +68,12 @@ export const filterData = (
   if (data.children) {
     if (data.name === "DOCUMENTDEF") {
       data.expanded = true;
+      if (io === "input") {
+        defaultExpandedInput.push(data.entity_path);
+      }
+      if (io === "output") {
+        defaultExpandedOutput.push(data.entity_path);
+      }
     }
     getPrefEdge(data, preferencesEdges);
     data.children.forEach((child: any) => {
@@ -103,13 +111,6 @@ export const filterData = (
               source: child.entity_path,
               target: child.atts.target,
             });
-          }
-        } else {
-          if (io === "input") {
-            defaultExpandedInput.push(child.atts.name);
-          }
-          if (io === "output") {
-            defaultExpandedOutput.push(child.atts.name);
           }
         }
         getPrefEdge(child, preferencesEdges);

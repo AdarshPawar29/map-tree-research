@@ -84,3 +84,13 @@ export const addPath = (parent: any, node: any) => {
     pathHashMap[parent] = [node];
   }
 };
+
+export const removeExtraNode = (data: any) => {
+  const updatedChild = data.children.filter(
+    (child: any) =>
+      child.name === "GROUPDEF" ||
+      child.name === "FIELDDEF" ||
+      child.name === "DOCUMENTDEF"
+  );
+  return { ...data, children: updatedChild };
+};
