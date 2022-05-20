@@ -97,11 +97,15 @@ export const filterData = (
             edges.push({
               target: child.entity_path,
               source: child.atts.source,
+              expandedL: "",
+              expandedR: "",
             });
           } else if (child.atts.target) {
             edges.push({
               source: child.entity_path,
               target: child.atts.target,
+              expandedL: "",
+              expandedR: "",
             });
           }
         } else {

@@ -9,12 +9,20 @@ import TreeItem from "@mui/lab/TreeItem";
 import { updateNodes } from "../utilsf";
 import result from "./sampleTree.json";
 
+const { defaultExpandedInput, defaultExpandedOutput } = updateNodes(result);
+
 export default function ObjectTreeView() {
   const updateXarrow = setTimeout(useXarrow(), 1000);
 
   const [input, setInput] = useState([]);
   const [output, setOutput] = useState([]);
   const [lines, setLines] = useState<any[]>([]);
+  const [expandedInput, setExpandedInput] = useState<string[]>([
+    ...defaultExpandedInput,
+  ]);
+  const [expandedOutput, setExpandedOutput] = useState<string[]>([
+    ...defaultExpandedOutput,
+  ]);
 
   const testExpand: string[] = [
     "header",
@@ -35,6 +43,29 @@ export default function ObjectTreeView() {
     console.log(filtered);
   }, []);
 
+  const updateHeadLeft = (nodes: any) => {
+    if (nodes && nodes.name === "GROUPDEF") {
+      lines.filter((line) => {
+        if (line.source.match(nodes.title)) {
+          if (line.expandedL == "") line.expandedL = nodes.entity_path;
+          else line.expandedL = "";
+        }
+        return line;
+      });
+    }
+  };
+
+  const updateHeadRight = (nodes: any) => {
+    if (nodes && nodes.name === "GROUPDEF") {
+      lines.filter((line) => {
+        if (line.target.match(nodes.title)) {
+          if (line.expandedR == "") line.expandedR = nodes.entity_path;
+          else line.expandedR = "";
+        }
+      });
+    }
+  };
+
   const renderDocumentReadTree = (nodes: any) => (
     <>
       <TreeItem
@@ -42,6 +73,7 @@ export default function ObjectTreeView() {
         key={nodes.javaName}
         nodeId={nodes.javaName ? nodes.javaName : nodes.root}
         label={nodes.javaName}
+        onClick={() => updateHeadLeft(nodes)}
       >
         {Array.isArray(nodes.children)
           ? nodes.children.map((node: any) => renderDocumentReadTree(node))
@@ -56,6 +88,7 @@ export default function ObjectTreeView() {
         key={nodes.javaName}
         nodeId={nodes.javaName ? nodes.javaName : nodes.root}
         label={nodes.javaName}
+        onClick={() => updateHeadRight(nodes)}
       >
         {Array.isArray(nodes.children)
           ? nodes.children.map((node: any) => renderDocumentWriteTree(node))
@@ -72,7 +105,7 @@ export default function ObjectTreeView() {
             <div className="input">
               <TreeView
                 aria-label="rich object"
-                defaultExpanded={["documentRead", ...testExpand]}
+                defaultExpanded={["documentRead", ...expandedInput]}
                 defaultCollapseIcon={<FolderOpenIcon />}
                 defaultExpandIcon={<CreateNewFolderIcon />}
                 defaultEndIcon={<InsertDriveFileOutlinedIcon />}
@@ -85,7 +118,7 @@ export default function ObjectTreeView() {
             <div className="output">
               <TreeView
                 aria-label="rich object"
-                defaultExpanded={["documentWrite", ...testExpand]}
+                defaultExpanded={["documentWrite", ...expandedOutput]}
                 defaultCollapseIcon={<FolderOpenIcon />}
                 defaultExpandIcon={<CreateNewFolderIcon />}
                 defaultEndIcon={<InsertDriveFileOutlinedIcon />}
@@ -98,14 +131,14 @@ export default function ObjectTreeView() {
             {lines.map((line, i) => (
               <Xarrow
                 key={i}
-                start={line.source}
-                end={line.target}
+                start={line.expandedL ? line.expandedL : line.source}
+                end={line.expandedR ? line.expandedR : line.target}
                 zIndex={1}
                 strokeWidth={2}
                 color={line.type === "prefEdge" ? "orange" : "DimGray"}
                 headSize={0}
-                startAnchor="right"
-                endAnchor={"left"}
+                startAnchor={line.expandedL ? line.expandedL : line.source}
+                endAnchor={line.expandedR ? line.expandedR : line.target}
               />
             ))}
           </Xwrapper>

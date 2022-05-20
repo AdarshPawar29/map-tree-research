@@ -16,6 +16,8 @@ export const getPrefEdge = (data: any, preferencesEdges: any) => {
             target: data.entity_path,
             source: removeQualifiers(sourcing),
             type: "prefEdge",
+            expandedL: "",
+            expandedR: "",
           });
         });
       } else if (pref.property === "target") {
@@ -24,6 +26,8 @@ export const getPrefEdge = (data: any, preferencesEdges: any) => {
             target: removeQualifiers(sourcing),
             source: data.entity_path,
             type: "prefEdge",
+            expandedL: "",
+            expandedR: "",
           });
         });
       }
