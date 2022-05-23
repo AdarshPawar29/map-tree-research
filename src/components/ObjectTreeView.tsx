@@ -8,8 +8,10 @@ import Xarrow, { useXarrow, Xwrapper } from "react-xarrows";
 import TreeItem from "@mui/lab/TreeItem";
 import { updateNodes } from "../utilsf";
 import result from "./sampleTree.json";
+import lodash from "lodash";
+import { type } from "os";
 
-const { defaultExpandedInput, defaultExpandedOutput } = updateNodes(result);
+const { allEdges } = updateNodes(result);
 
 export default function ObjectTreeView() {
   const updateXarrow = setTimeout(useXarrow(), 1000);
@@ -17,12 +19,13 @@ export default function ObjectTreeView() {
   const [input, setInput] = useState([]);
   const [output, setOutput] = useState([]);
   const [lines, setLines] = useState<any[]>([]);
-  const [expandedInput, setExpandedInput] = useState<string[]>([
-    ...defaultExpandedInput,
-  ]);
-  const [expandedOutput, setExpandedOutput] = useState<string[]>([
-    ...defaultExpandedOutput,
-  ]);
+  const [edges, setEgdes] = useState([]);
+  // const [expandedInput, setExpandedInput] = useState<string[]>([
+  //   ...defaultExpandedInput,
+  // ]);
+  // const [expandedOutput, setExpandedOutput] = useState<string[]>([
+  //   ...defaultExpandedOutput,
+  // ]);
 
   const testExpand: string[] = [
     "header",
@@ -39,30 +42,114 @@ export default function ObjectTreeView() {
     const filtered = updateNodes(result);
     setInput(filtered.input[0]);
     setOutput(filtered.output[0]);
-    setLines(filtered.edges);
+    setLines(allEdges);
+    setEgdes(filtered.edges);
     console.log(filtered);
   }, []);
 
-  const updateHeadLeft = (nodes: any) => {
+  const findLeftChild = (nodes: any) => {
+    const child = nodes.children.map((node: any) => node.entity_path);
+    let newChild: any[] = [];
+    edges.forEach(
+      (edge: any) => child.includes(edge.source) && newChild.push(edge)
+    );
+    return newChild;
+  };
+
+  const findRightChild = (nodes: any) => {
+    const child = nodes.children.map((node: any) => node.entity_path);
+    let newChild: any[] = [];
+    edges.forEach(
+      (edge: any) => child.includes(edge.target) && newChild.push(edge)
+    );
+    return newChild;
+  };
+
+  const updateHeadLeft = async (nodes: any) => {
     if (nodes && nodes.name === "GROUPDEF") {
-      lines.filter((line) => {
-        if (line.source.match(nodes.title)) {
-          if (line.expandedL == "") line.expandedL = nodes.entity_path;
-          else line.expandedL = "";
+      const child = findLeftChild(nodes);
+      const parent = allEdges.find(
+        (ele: any) => ele.source === nodes.entity_path
+      );
+      //Find parent inside current array
+      const io = lines.find((ele: any) => ele.source === nodes.entity_path);
+      if (io) {
+        const newChild = child.map((child) => ({
+          source: child.source,
+          target: parent.target,
+          type: child.type && child.type,
+          expandedL: parent.source,
+          expandedR: "",
+        }));
+        //Current node child edges
+        const remainingEdges = lines.filter(
+          (ele: any) => ele.source !== parent.source
+        );
+
+        //Find repeating child edge
+        setLines([...remainingEdges, ...newChild]);
+      } else {
+        // Find the parent edge mapping
+        const parentEdge: any = edges.find(
+          (ele: any) => ele.source === nodes.entity_path
+        );
+
+        if (parentEdge) {
+          lines.push(parentEdge);
         }
-        return line;
-      });
+        // Remove the child lines
+        const filteredLines = lines.filter((ele: any) => {
+          const childFound = child.find(
+            (childElem: any) => childElem.source === ele.source
+          );
+          return !childFound;
+        });
+
+        setLines(filteredLines);
+      }
     }
   };
 
   const updateHeadRight = (nodes: any) => {
     if (nodes && nodes.name === "GROUPDEF") {
-      lines.filter((line) => {
-        if (line.target.match(nodes.title)) {
-          if (line.expandedR == "") line.expandedR = nodes.entity_path;
-          else line.expandedR = "";
+      const child = findRightChild(nodes);
+      const parent = allEdges.find(
+        (ele: any) => ele.target === nodes.entity_path
+      );
+      //Find parent inside current array
+      const io = lines.find((ele: any) => ele.target === nodes.entity_path);
+      if (io) {
+        const newChild = child.map((child) => ({
+          source: parent.source,
+          target: child.target,
+          type: child.type,
+        }));
+        //Current node child edges
+        const remainingEdges = allEdges.filter(
+          (ele: any) => ele.target !== parent.target
+        );
+
+        //Find repeating child edge
+        setLines([...remainingEdges, ...newChild]);
+      } else {
+        // Find the parent edge mapping
+        const parentEdge: any = edges.find(
+          (ele: any) => ele.target === nodes.entity_path
+        );
+        // console.log(parentEdge)
+        if (parentEdge) {
+          lines.push(parentEdge);
         }
-      });
+        // Remove the child lines
+        const filteredLines = lines.filter((ele: any) => {
+          const childFound = child.find(
+            (childElem: any) => childElem.target === ele.target
+          );
+          return !childFound;
+        });
+
+        setLines(filteredLines);
+      }
     }
   };
 
@@ -105,7 +192,7 @@ export default function ObjectTreeView() {
             <div className="input">
               <TreeView
                 aria-label="rich object"
-                defaultExpanded={["documentRead", ...expandedInput]}
+                defaultExpanded={["documentRead"]}
                 defaultCollapseIcon={<FolderOpenIcon />}
                 defaultExpandIcon={<CreateNewFolderIcon />}
                 defaultEndIcon={<InsertDriveFileOutlinedIcon />}
@@ -118,7 +205,7 @@ export default function ObjectTreeView() {
             <div className="output">
               <TreeView
                 aria-label="rich object"
-                defaultExpanded={["documentWrite", ...expandedOutput]}
+                defaultExpanded={["documentWrite"]}
                 defaultCollapseIcon={<FolderOpenIcon />}
                 defaultExpandIcon={<CreateNewFolderIcon />}
                 defaultEndIcon={<InsertDriveFileOutlinedIcon />}
@@ -131,20 +218,14 @@ export default function ObjectTreeView() {
             {lines.map((line, i) => (
               <Xarrow
                 key={i}
-                start={line.expandedL ? line.expandedL : line.source}
-                end={line.expandedR ? line.expandedR : line.target}
+                start={line.source}
+                end={line.target}
                 zIndex={1}
                 strokeWidth={2}
-                color={
-                  line.type === "prefEdge"
-                    ? "orange"
-                    : line.type === "group"
-                    ? "blue"
-                    : "DimGray"
-                }
+                color={line.type === "prefEdge" ? "orange" : "DimGray"}
                 headSize={0}
-                startAnchor={line.expandedL ? line.expandedL : line.source}
-                endAnchor={line.expandedR ? line.expandedR : line.target}
+                // startAnchor="left"
+                // endAnchor={"right"}
               />
             ))}
           </Xwrapper>

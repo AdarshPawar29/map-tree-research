@@ -127,12 +127,16 @@ export const filterData = (
             allEdges.push({
               target: child.entity_path,
               source: child.atts.source,
+              expandedL: "",
+              expandedR: "",
               type: "group",
             });
           } else if (child.atts.target) {
             allEdges.push({
               source: child.entity_path,
               target: child.atts.target,
+              expandedL: "",
+              expandedR: "",
               type: "group",
             });
           }
