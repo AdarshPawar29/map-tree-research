@@ -1,0 +1,33 @@
+.treeRow.isSelected {
+  background-color: rgba(0, 162, 255, 0.3);
+}
+.treeRow:hover {
+  background-color: rgba(0, 162, 255, 0.1);
+}
+
+.treeRowContent {
+  display: inline-flex;
+  align-items: center;
+}
+
+.treeIcon {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  font-style: normal;
+  text-align: center;
+}
+
+.treeIcon.treeIcon--children:hover {
+  color: rgba(0, 162, 255, 1);
+  cursor: pointer;
+}
+
+.treeLabel {
+  display: inline-block;
+}
+
+.tree-arborist{
+  display: flex;
+  justify-content: space-between;
+}

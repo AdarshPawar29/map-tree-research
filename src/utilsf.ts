@@ -47,6 +47,7 @@ export const filterData = (
   let parentEntity: any = null;
 
   data.entity_path = pathRoot;
+  data.id = pathRoot;
   data.has_prefs = false;
 
   if (data.name === "DOCUMENTDEF") {
