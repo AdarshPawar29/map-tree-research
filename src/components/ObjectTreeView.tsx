@@ -14,7 +14,7 @@ import { type } from "os";
 const { allEdges } = updateNodes(result);
 
 export default function ObjectTreeView() {
-  const updateXarrow = setTimeout(useXarrow(), 1000);
+  const updateXarrow = setTimeout(useXarrow(), 500);
 
   const [input, setInput] = useState([]);
   const [output, setOutput] = useState([]);
@@ -27,17 +27,7 @@ export default function ObjectTreeView() {
   //   ...defaultExpandedOutput,
   // ]);
 
-  const testExpand: string[] = [
-    "header",
-    "test",
-    "sourcingTest",
-    "badSource",
-    "fieldLength",
-    "constantValue",
-    "repeating",
-    "repeatingRep",
-    "item",
-  ];
+  const testExpand: string[] = [];
   useEffect(() => {
     const filtered = updateNodes(result);
     setInput(filtered.input[0]);
@@ -56,6 +46,54 @@ export default function ObjectTreeView() {
     return newChild;
   };
 
+  const childToParentLeft = (nodes: any, childs: any) => {
+    //Check if the node is open
+    const parentEdge = lines.find((line) => line.source === nodes.entity_path);
+    console.log(parentEdge, childs);
+    console.log(lines);
+    //If parent edge is present we need to push it's child to current lines
+    if (parentEdge && childs && childs.length > 0) {
+      const newChild = childs.map((child: any) => ({
+        source: child.source,
+        target: parentEdge.target,
+        expandedL: nodes.entity_path,
+        expandedR: "",
+        type: child.type === "prefEdge" ? "prefEdge" : "file",
+      }));
+
+      //Current node child edges
+      let remainingEdges = lines.filter(
+        (ele: any) => ele.source !== parentEdge.source
+      );
+
+      setLines([...remainingEdges, ...newChild]);
+    } else {
+      //Find existing child for current parent
+      const existingChild = lines.map((line: any) => {
+        if (line.expandedL === nodes.entity_path) {
+          line.source = line.expandedL;
+          line.expandedL = "";
+        }
+        return line;
+      });
+      //Current node child edges
+      // const remainingEdges = lines.filter(
+      //   (ele: any) => ele.source !== parentEdge.source
+      // );
+
+      //Find repeating child edge
+      setLines(existingChild);
+    }
+  };
+
+  const updateHeadLeft = async (nodes: any) => {
+    console.log(nodes);
+    if (nodes && nodes.name === "GROUPDEF") {
+      const child = findLeftChild(nodes);
+      const childToParent = childToParentLeft(nodes, child);
+    }
+  };
+
   const findRightChild = (nodes: any) => {
     const child = nodes.children.map((node: any) => node.entity_path);
     let newChild: any[] = [];
@@ -65,91 +103,45 @@ export default function ObjectTreeView() {
     return newChild;
   };
 
-  const updateHeadLeft = async (nodes: any) => {
-    if (nodes && nodes.name === "GROUPDEF") {
-      const child = findLeftChild(nodes);
-      const parent = allEdges.find(
-        (ele: any) => ele.source === nodes.entity_path
+  const childToParentRight = (nodes: any, childs: any) => {
+    const parentEdge = lines.find((line) => line.target === nodes.entity_path);
+    // console.log(parentEdge, childs);
+    //If parent edge is present we need to push it's child to current lines
+    if (parentEdge && childs && childs.length > 0) {
+      const newChild = childs.map((child: any) => ({
+        source: parentEdge.source,
+        target: child.target,
+        expandedL: "",
+        expandedR: nodes.entity_path,
+        type: child.type === "prefEdge" ? "prefEdge" : "file",
+      }));
+
+      //Current node child edges
+      let remainingEdges = lines.filter(
+        (ele: any) => ele.target !== parentEdge.target
       );
-      //Find parent inside current array
-      const io = lines.find((ele: any) => ele.source === nodes.entity_path);
-      if (io) {
-        const newChild = child.map((child) => ({
-          source: child.source,
-          target: parent.target,
-          type: child.type && child.type,
-          expandedL: parent.source,
-          expandedR: "",
-        }));
-        //Current node child edges
-        const remainingEdges = lines.filter(
-          (ele: any) => ele.source !== parent.source
-        );
-
-        //Find repeating child edge
-        setLines([...remainingEdges, ...newChild]);
-      } else {
-        // Find the parent edge mapping
-        const parentEdge: any = edges.find(
-          (ele: any) => ele.source === nodes.entity_path
-        );
-
-        if (parentEdge) {
-          lines.push(parentEdge);
+      console.log(newChild);
+      setLines([...remainingEdges, ...newChild]);
+    } else {
+      console.log("parentEdge", parentEdge, childs);
+      //Find existing child for current parent
+      const existingChild = lines.map((line: any) => {
+        if (line.expandedR === nodes.entity_path) {
+          line.target = line.expandedR;
+          line.expandedR = "";
         }
-        // Remove the child lines
-        const filteredLines = lines.filter((ele: any) => {
-          const childFound = child.find(
-            (childElem: any) => childElem.source === ele.source
-          );
-          return !childFound;
-        });
+        return line;
+      });
 
-        setLines(filteredLines);
-      }
+      //Find repeating child edge
+      setLines(existingChild);
     }
   };
 
   const updateHeadRight = (nodes: any) => {
     if (nodes && nodes.name === "GROUPDEF") {
       const child = findRightChild(nodes);
-      const parent = allEdges.find(
-        (ele: any) => ele.target === nodes.entity_path
-      );
-      //Find parent inside current array
-      const io = lines.find((ele: any) => ele.target === nodes.entity_path);
-      if (io) {
-        const newChild = child.map((child) => ({
-          source: parent.source,
-          target: child.target,
-          type: child.type,
-        }));
-        //Current node child edges
-        const remainingEdges = allEdges.filter(
-          (ele: any) => ele.target !== parent.target
-        );
-
-        //Find repeating child edge
-        setLines([...remainingEdges, ...newChild]);
-      } else {
-        // Find the parent edge mapping
-        const parentEdge: any = edges.find(
-          (ele: any) => ele.target === nodes.entity_path
-        );
-        // console.log(parentEdge)
-        if (parentEdge) {
-          lines.push(parentEdge);
-        }
-        // Remove the child lines
-        const filteredLines = lines.filter((ele: any) => {
-          const childFound = child.find(
-            (childElem: any) => childElem.target === ele.target
-          );
-          return !childFound;
-        });
-
-        setLines(filteredLines);
-      }
+      const childToParent = childToParentRight(nodes, child);
     }
   };
 
@@ -218,8 +210,8 @@ export default function ObjectTreeView() {
             {lines.map((line, i) => (
               <Xarrow
                 key={i}
-                start={line.source}
-                end={line.target}
+                start={line.source ? line.source : line.expandedL}
+                end={line.target ? line.target : line.expandedR}
                 zIndex={1}
                 strokeWidth={2}
                 color={line.type === "prefEdge" ? "orange" : "DimGray"}

@@ -113,6 +113,7 @@ export const filterData = (
               source: child.atts.source,
               expandedL: "",
               expandedR: "",
+              type: "file",
             });
           } else if (child.atts.target) {
             edges.push({
@@ -120,6 +121,7 @@ export const filterData = (
               target: child.atts.target,
               expandedL: "",
               expandedR: "",
+              type: "file",
             });
           }
         } else {
