@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useReducer } from "react";
 import TreeView from "@mui/lab/TreeView";
 import CreateNewFolderIcon from "@mui/icons-material/CreateNewFolder";
 import FolderOpenIcon from "@mui/icons-material/FolderOpen";
 import InsertDriveFileOutlinedIcon from "@mui/icons-material/InsertDriveFileOutlined";
-import Xarrow, { useXarrow, Xwrapper } from "react-xarrows";
+import Xarrow, { Xwrapper } from "react-xarrows";
 
 import TreeItem from "@mui/lab/TreeItem";
 import { updateNodes } from "../utilsf";
@@ -14,8 +14,6 @@ import { type } from "os";
 const { allEdges } = updateNodes(result);
 
 export default function ObjectTreeView() {
-  const updateXarrow = setTimeout(useXarrow(), 500);
-
   const [input, setInput] = useState([]);
   const [output, setOutput] = useState([]);
   const [lines, setLines] = useState<any[]>([]);
@@ -36,6 +34,9 @@ export default function ObjectTreeView() {
     setEgdes(filtered.edges);
     console.log(filtered);
   }, []);
+  useEffect(() => {
+    console.log("render...");
+  });
 
   const findLeftChild = (nodes: any) => {
     const child = nodes.children.map((node: any) => node.entity_path);
@@ -55,16 +56,24 @@ export default function ObjectTreeView() {
     if (parentEdge && childs && childs.length > 0) {
       const newChild = childs.map((child: any) => ({
         source: child.source,
-        target: parentEdge.target,
+        target: child.expandedR === "" ? parentEdge.target : child.target,
         expandedL: nodes.entity_path,
-        expandedR: "",
-        type: child.type === "prefEdge" ? "prefEdge" : "file",
+        expandedR: child.expandedR ? child.expandedR : "",
+        type: child.type,
       }));
 
       //Current node child edges
       let remainingEdges = lines.filter(
         (ele: any) => ele.source !== parentEdge.source
       );
+      console.log(newChild, remainingEdges);
+
+      //Update edge array to keep expanded att in sync
+      newChild.map((child: any) => {
+        edges.find((edge: any) => {
+          if (edge.source === child.source) edge.expandedL = child.expandedL;
+        });
+      });
 
       setLines([...remainingEdges, ...newChild]);
     } else {
@@ -72,14 +81,16 @@ export default function ObjectTreeView() {
       const existingChild = lines.map((line: any) => {
         if (line.expandedL === nodes.entity_path) {
           line.source = line.expandedL;
-          line.expandedL = "";
         }
         return line;
       });
-      //Current node child edges
-      // const remainingEdges = lines.filter(
-      //   (ele: any) => ele.source !== parentEdge.source
-      // );
+      // console.log(existingChild)
+      
+      childs.map((child: any) => {
+        edges.find((edge: any) => {
+          if (edge.source === child.source) edge.expandedL = "";
+        });
+      });
 
       //Find repeating child edge
       setLines(existingChild);
@@ -96,41 +107,60 @@ export default function ObjectTreeView() {
 
   const findRightChild = (nodes: any) => {
     const child = nodes.children.map((node: any) => node.entity_path);
-    let newChild: any[] = [];
+    console.log(child);
+    console.log(lines);
+    let newChild: any[] = [],
+      target: string[] = [];
     edges.forEach(
-      (edge: any) => child.includes(edge.target) && newChild.push(edge)
+      (edge: any) =>
+        child.includes(edge.target) &&
+        newChild.push(edge) &&
+        target.push(edge.source)
     );
-    return newChild;
+    return { newChild, target };
   };
 
-  const childToParentRight = (nodes: any, childs: any) => {
+  const childToParentRight = (nodes: any, childs: any, target: string[]) => {
     const parentEdge = lines.find((line) => line.target === nodes.entity_path);
-    // console.log(parentEdge, childs);
+    console.log(parentEdge, childs);
     //If parent edge is present we need to push it's child to current lines
-    if (parentEdge && childs && childs.length > 0) {
+    if (parentEdge && childs && target && childs.length > 0) {
       const newChild = childs.map((child: any) => ({
-        source: parentEdge.source,
+        source: child.expandedL === "" ? parentEdge.source : child.source,
         target: child.target,
-        expandedL: "",
+        expandedL: child.expandedL ? child.expandedL : "",
         expandedR: nodes.entity_path,
-        type: child.type === "prefEdge" ? "prefEdge" : "file",
+        type: child.type,
       }));
 
       //Current node child edges
-      let remainingEdges = lines.filter(
+      const remainingEdges = lines.filter(
         (ele: any) => ele.target !== parentEdge.target
       );
-      console.log(newChild);
+      console.log(newChild, remainingEdges);
+
+      newChild.map((child: any) => {
+        edges.find((edge: any) => {
+          if (edge.target === child.target) edge.expandedR = child.expandedR;
+        });
+      });
+
       setLines([...remainingEdges, ...newChild]);
     } else {
-      console.log("parentEdge", parentEdge, childs);
+      console.log("parentEdge", lines, childs);
       //Find existing child for current parent
       const existingChild = lines.map((line: any) => {
+        console.log(line.expandedR , nodes.entity_path)
         if (line.expandedR === nodes.entity_path) {
           line.target = line.expandedR;
-          line.expandedR = "";
         }
         return line;
+      });
+
+      childs.map((child: any) => {
+        edges.find((edge: any) => {
+          if (edge.target === child.target) edge.expandedR = "";
+        });
       });
 
       //Find repeating child edge
@@ -140,8 +170,8 @@ export default function ObjectTreeView() {
 
   const updateHeadRight = (nodes: any) => {
     if (nodes && nodes.name === "GROUPDEF") {
-      const child = findRightChild(nodes);
-      const childToParent = childToParentRight(nodes, child);
+      const { newChild, target } = findRightChild(nodes);
+      const childToParent = childToParentRight(nodes, newChild, target);
     }
   };
 
@@ -175,7 +205,13 @@ export default function ObjectTreeView() {
       </TreeItem>
     </>
   );
+  const [, forceUpdate] = useReducer((x) => x + 1, 0);
 
+  function handleClick() {
+    setTimeout(() => {
+      forceUpdate();
+    }, 500/2);
+  }
   return (
     <>
       <div className="tree-box" style={{ display: "flex" }}>
@@ -189,7 +225,7 @@ export default function ObjectTreeView() {
                 defaultExpandIcon={<CreateNewFolderIcon />}
                 defaultEndIcon={<InsertDriveFileOutlinedIcon />}
                 // sx={{ height: "100%", flexGrow: 1 }}
-                onClick={() => updateXarrow}
+                onClick={handleClick}
               >
                 {renderDocumentReadTree(input)}
               </TreeView>
@@ -202,7 +238,7 @@ export default function ObjectTreeView() {
                 defaultExpandIcon={<CreateNewFolderIcon />}
                 defaultEndIcon={<InsertDriveFileOutlinedIcon />}
                 // sx={{ height: "100%", flexGrow: 1 }}
-                onClick={() => updateXarrow}
+                onClick={handleClick}
               >
                 {renderDocumentWriteTree(output)}
               </TreeView>

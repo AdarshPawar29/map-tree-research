@@ -20,7 +20,7 @@ export const updateNodes = (map: any) => {
   map = {
     output: [filterData(treeViewOutput, "output")],
     input: [filterData(treeViewInput, "input")],
-    edges: [...edges, ...preferencesEdges, ...allEdges],
+    edges: [...edges, ...allEdges],
     allEdges: allEdges,
     preferencesEdges: preferencesEdges,
     mapName: map.repo,
@@ -28,6 +28,7 @@ export const updateNodes = (map: any) => {
     defaultExpandedRead: defaultExpandedInput,
     defaultExpandedWrite: defaultExpandedOutput,
   };
+  console.log(edges)
   return map;
 };
 
@@ -47,6 +48,7 @@ export const filterData = (
   let parentEntity: any = null;
 
   data.entity_path = pathRoot;
+  data.id = pathRoot;
   data.has_prefs = false;
 
   if (data.name === "DOCUMENTDEF") {
