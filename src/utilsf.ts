@@ -20,7 +20,7 @@ export const updateNodes = (map: any) => {
   map = {
     output: [filterData(treeViewOutput, "output")],
     input: [filterData(treeViewInput, "input")],
-    edges: [...edges, ...preferencesEdges, ...allEdges],
+    edges: [...edges, ...allEdges],
     allEdges: allEdges,
     preferencesEdges: preferencesEdges,
     mapName: map.repo,
@@ -28,6 +28,7 @@ export const updateNodes = (map: any) => {
     defaultExpandedRead: defaultExpandedInput,
     defaultExpandedWrite: defaultExpandedOutput,
   };
+  console.log(edges)
   return map;
 };
 
@@ -112,11 +113,17 @@ export const filterData = (
             edges.push({
               target: child.entity_path,
               source: child.atts.source,
+              expandedL: "",
+              expandedR: "",
+              type: "file",
             });
           } else if (child.atts.target) {
             edges.push({
               source: child.entity_path,
               target: child.atts.target,
+              expandedL: "",
+              expandedR: "",
+              type: "file",
             });
           }
         } else {
@@ -124,12 +131,16 @@ export const filterData = (
             allEdges.push({
               target: child.entity_path,
               source: child.atts.source,
+              expandedL: "",
+              expandedR: "",
               type: "group",
             });
           } else if (child.atts.target) {
             allEdges.push({
               source: child.entity_path,
               target: child.atts.target,
+              expandedL: "",
+              expandedR: "",
               type: "group",
             });
           }
