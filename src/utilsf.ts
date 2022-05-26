@@ -20,7 +20,7 @@ export const updateNodes = (map: any) => {
   map = {
     output: [filterData(treeViewOutput, "output")],
     input: [filterData(treeViewInput, "input")],
-    edges: [...edges, ...preferencesEdges, ...allEdges],
+    edges: [...edges, ...preferencesEdges],
     allEdges: allEdges,
     preferencesEdges: preferencesEdges,
     mapName: map.repo,

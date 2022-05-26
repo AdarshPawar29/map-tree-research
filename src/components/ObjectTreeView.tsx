@@ -10,8 +10,8 @@ import { updateNodes } from "../utilsf";
 import result from "./sampleTree.json";
 
 export default function ObjectTreeView() {
-  const [input, setInput] = useState([]);
-  const [output, setOutput] = useState([]);
+  const [input, setInput] = useState<any>([]);
+  const [output, setOutput] = useState<any>([]);
   const [lines, setLines] = useState<any[]>([]);
 
   const testExpand: string[] = [
@@ -31,6 +31,7 @@ export default function ObjectTreeView() {
     setOutput(filtered.output[0]);
     setLines(filtered.edges);
     console.log(filtered);
+    handleClick();
   }, []);
   useEffect(() => {
     console.log("render...");
@@ -69,8 +70,56 @@ export default function ObjectTreeView() {
   function handleClick() {
     setTimeout(() => {
       forceUpdate();
-    }, 1000);
+    }, 500);
   }
+
+  const getAllParents = (items: any, id: string) => {
+    const allIds: string[] = [];
+
+    items.forEach((item: { id: string; children: any }) => {
+      if (item.id === id) {
+        allIds.push(item.id);
+      } else if (item.children) {
+        const ids = getAllParents(item.children, id);
+
+        if (ids.length) allIds.push(item.id);
+
+        ids.forEach((id) => allIds.push(id));
+      }
+    });
+    return allIds;
+  };
+  const getSourceNode = (nodeID: string) => {
+    let sourceNode: string = "";
+    const allIds = getAllParents(input.children, nodeID);
+    for (let i = 0; i < allIds.length; i++) {
+      if (document.getElementById(allIds[i]) && nodeID === allIds[i]) {
+        sourceNode = nodeID;
+        break;
+      }
+      if (document.getElementById(allIds[i]) === null) {
+        sourceNode = allIds[i - 1];
+        break;
+      }
+    }
+    return sourceNode;
+  };
+
+  const getTargetNode = (nodeID: string) => {
+    let targetNode: string = "";
+    const allIds = getAllParents(output.children, nodeID);
+    for (let i = 0; i < allIds.length; i++) {
+      if (document.getElementById(allIds[i]) && nodeID === allIds[i]) {
+        targetNode = nodeID;
+        break;
+      }
+      if (document.getElementById(allIds[i]) === null) {
+        targetNode = allIds[i - 1];
+        break;
+      }
+    }
+    return targetNode;
+  };
   return (
     <>
       <div className="tree-box" style={{ display: "flex" }}>
@@ -79,7 +128,7 @@ export default function ObjectTreeView() {
             <div className="input">
               <TreeView
                 aria-label="rich object"
-                defaultExpanded={["documentRead", ...testExpand]}
+                defaultExpanded={["documentRead"]}
                 defaultCollapseIcon={<FolderOpenIcon />}
                 defaultExpandIcon={<CreateNewFolderIcon />}
                 defaultEndIcon={<InsertDriveFileOutlinedIcon />}
@@ -92,7 +141,7 @@ export default function ObjectTreeView() {
             <div className="output">
               <TreeView
                 aria-label="rich object"
-                defaultExpanded={["documentWrite", ...testExpand]}
+                defaultExpanded={["documentWrite"]}
                 defaultCollapseIcon={<FolderOpenIcon />}
                 defaultExpandIcon={<CreateNewFolderIcon />}
                 defaultEndIcon={<InsertDriveFileOutlinedIcon />}
@@ -105,8 +154,8 @@ export default function ObjectTreeView() {
             {lines.map((line, i) => (
               <Xarrow
                 key={i}
-                start={line.source}
-                end={line.target}
+                start={getSourceNode(line.source)}
+                end={getTargetNode(line.target)}
                 zIndex={1}
                 strokeWidth={2}
                 color={
